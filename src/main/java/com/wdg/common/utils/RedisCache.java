@@ -1,6 +1,7 @@
 package com.wdg.common.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -239,5 +240,17 @@ public final class RedisCache {
 
     /****************** zSet 有序集合进行操作 ****************/
 
-    
+
+    /****************** common 相关方法 ****************/
+
+    /**
+     * 连通性测试
+     * @return 成功返回"PONG"
+     */
+    public String ping() {
+        RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();
+        return connection.ping();
+    }
+
+
 }

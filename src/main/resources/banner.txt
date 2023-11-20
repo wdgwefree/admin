@@ -1,0 +1,3 @@
+${AnsiColor.BRIGHT_RED}
+Project Version 1.0
+
