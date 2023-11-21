@@ -4,6 +4,8 @@ server:
     context-path: /
 
 spring:
+  profiles:
+    active: value
   servlet:
     # 文件上传
     multipart:
