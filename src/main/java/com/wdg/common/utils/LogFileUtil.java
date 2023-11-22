@@ -17,9 +17,15 @@ public class LogFileUtil {
     private String path;
 
 
+    public static void debugLog(String message) {
+        message = "[" + Thread.currentThread().getName() + "]" + "[DEBUG]" + message + "\n";
+        log(message);
+    }
 
-    public synchronized void log(String message) {
+    private synchronized static void log(String message) {
         try {
+            System.out.println("Thread: "+Thread.currentThread().getName()+"执行中");
+            Thread.sleep(5000);
             Date date = new Date();
             SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd");
             String dateStr = df.format(date);
@@ -29,6 +35,7 @@ public class LogFileUtil {
             debugFile.write(dff.format(new Date()).getBytes());
             debugFile.write(message.getBytes());
             debugFile.close();
+            System.out.println("Thread: "+Thread.currentThread().getName()+"执行结束");
         } catch (Exception e) {
             e.printStackTrace();
         }
