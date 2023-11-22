@@ -76,6 +76,17 @@ public class ApiResult implements Serializable {
     /**
      * 通用返回失败
      *
+     * @param
+     * @return
+     */
+    public static ApiResult error() {
+        return new ApiResult(ResultCode.ERROR.getCode(),ResultCode.ERROR.getMsg());
+    }
+
+
+    /**
+     * 通用返回失败
+     *
      * @param resultCode
      * @return
      */
