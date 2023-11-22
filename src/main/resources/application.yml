@@ -68,3 +68,5 @@ knife4j:
     username: admin
     # Basic认证密码
     password: 123456
+
+
