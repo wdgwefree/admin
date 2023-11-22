@@ -25,6 +25,10 @@ public class UserGranterBuilder {
         granterPool.forEach(this.granterPool::put);
     }
 
+
+    /**
+     * 对外提供获取具体策略
+     */
     public UserGranter login(String type) {
         UserGranter userGranter = granterPool.get(type);
         if (userGranter == null) {
