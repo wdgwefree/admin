@@ -115,4 +115,14 @@ public class ApiResult implements Serializable {
     public static ApiResult businessException(String msg) {
         return new ApiResult(ResultCode.BUSINESS_EXCEPTION.getCode(), msg);
     }
+
+    /**
+     * 参数异常返回
+     *
+     * @param msg
+     * @return
+     */
+    public static ApiResult argumentException(String msg) {
+        return new ApiResult(ResultCode.ARGUMENT_EXCEPTION.getCode(), msg);
+    }
 }

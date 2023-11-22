@@ -2,6 +2,7 @@ package com.wdg.common.exception;
 
 import com.wdg.common.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,8 +28,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ApiResult handleException(Exception e) {
-        log.error("异常[Exception]：" + e.getMessage());
-        return ApiResult.exception(getExceptionMsg(e));
+        //处理参数异常
+        // (嵌套对象字段缺失、校验不通过会走这里)
+        if (e instanceof MethodArgumentNotValidException) {
+            String msg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().get(0).getDefaultMessage();
+            log.error("参数异常[MethodArgumentNotValidException]：" + e.getMessage());
+            return ApiResult.argumentException(msg);
+        } else {
+            log.error("异常[Exception]：" + e.getMessage());
+            return ApiResult.exception(getExceptionMsg(e));
+        }
     }
 
 
