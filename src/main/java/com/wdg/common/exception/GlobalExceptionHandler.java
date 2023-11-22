@@ -13,18 +13,24 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * 处理自定义的业务异常
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ApiResult handleException(BusinessException e) {
+        log.error("自定义的业务异常[BusinessException]：" + e.getMsg());
+        return ApiResult.businessException(e.toString());
+    }
+
+    /**
+     * 处理异常
+     */
     @ExceptionHandler(Exception.class)
     public ApiResult handleException(Exception e) {
-        // 自定义异常
-        if (e instanceof BusinessException) {
-            String msg = getExceptionMsg(e);
-            log.error("BusinessException：" + e);
-            return ApiResult.exception(msg);
-        } else {
-            log.error("Exception：" + e);
-            return ApiResult.exception(e.toString());
-        }
+        log.error("异常[Exception]：" + e.getMessage());
+        return ApiResult.exception(getExceptionMsg(e));
     }
+
 
     /**
      * 获取错误信息
