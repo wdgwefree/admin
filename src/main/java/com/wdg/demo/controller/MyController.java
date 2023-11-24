@@ -1,5 +1,6 @@
 package com.wdg.demo.controller;
 
+import cn.hutool.core.date.StopWatch;
 import com.wdg.common.result.ApiResult;
 import com.wdg.demo.dto.ParamVO;
 import io.swagger.annotations.Api;
@@ -22,7 +23,18 @@ public class MyController {
 
     @ApiOperation(value = "这个是测试test接口")
     @PostMapping("/test1")
-    public ApiResult test1(@Validated @RequestBody ParamVO paramVO){
+    public ApiResult test1(@Validated @RequestBody ParamVO paramVO) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start("一");
+        //System.out.println(stopWatch.currentTaskName()+": ");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(stopWatch.currentTaskName());
+        stopWatch.stop();
+        System.out.println(": "+stopWatch.getTotalTimeMillis());
         return ApiResult.success();
     }
 

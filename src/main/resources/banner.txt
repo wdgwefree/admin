@@ -2,5 +2,5 @@ ${AnsiColor.BRIGHT_RED}
 Project Version 1.0
 mybatis-plus
 mysql、redis、
-全局统一返回、全局异常处理、日志文件记录
+全局统一返回、全局异常处理、日志文件记录、knife4j接口文档管理、请求参数校验、自定义拦截器
 设计模式：[策略模式-多种登录方式实现]
