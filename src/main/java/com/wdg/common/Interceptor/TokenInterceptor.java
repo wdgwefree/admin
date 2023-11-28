@@ -1,5 +1,8 @@
 package com.wdg.common.Interceptor;
 
+import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTPayload;
+import cn.hutool.jwt.JWTUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,8 +22,19 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         System.out.println("进入拦截器=======执行前========");
-        return true;
+
+        String token = request.getHeader("token");//获取请求头中的令牌
+        boolean verify = JWTUtil.verify(token, "temp".getBytes());
+        System.out.println("token验证结果:"+verify);
+        JWT jwt = JWTUtil.parseToken(token);
+        JWTPayload payload = jwt.getPayload();
+        System.out.println("jwt:"+payload);
+        System.out.println(System.currentTimeMillis());
+        if (verify){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -1,15 +1,17 @@
 package com.wdg.demo.controller;
 
 import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.result.ApiResult;
 import com.wdg.demo.dto.ParamVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @description: test
@@ -25,17 +27,21 @@ public class MyController {
     @PostMapping("/test1")
     public ApiResult test1(@Validated @RequestBody ParamVO paramVO) {
         StopWatch stopWatch = new StopWatch();
-        stopWatch.start("一");
-        //System.out.println(stopWatch.currentTaskName()+": ");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(stopWatch.currentTaskName());
-        stopWatch.stop();
-        System.out.println(": "+stopWatch.getTotalTimeMillis());
-        return ApiResult.success();
+
+        return ApiResult.success("123456");
+
+    }
+
+    @ApiOperation(value = "生成token")
+    @GetMapping("/test2")
+    public ApiResult test2() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "wdg");
+        map.put("pwd", "123456");
+        map.put("randomId", IdUtil.getSnowflakeNextIdStr());
+        map.put("expire_time", System.currentTimeMillis() + 1000*30);
+        String token = JWTUtil.createToken(map, "temp".getBytes());
+        return ApiResult.success(token);
     }
 
 }

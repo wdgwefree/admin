@@ -28,6 +28,8 @@ public class ControllerConfig implements WebMvcConfigurer {
         //不需要拦截的接口
         List<String> patterns = new ArrayList<>();
         patterns.add("/login");
+        patterns.add("/wdg/test2");
+
 
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
