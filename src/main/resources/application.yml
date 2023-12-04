@@ -56,6 +56,7 @@ mybatis-plus:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+#接口文档管理
 knife4j:
   # 开启增强配置
   enable: true
@@ -69,4 +70,9 @@ knife4j:
     # Basic认证密码
     password: 123456
 
-
+#minio配置
+minio:
+  endpoint: http://81.70.201.246:9002
+  accessKey: minio
+  secretKey: minio1234
+  bucketName: data1

@@ -1,10 +1,13 @@
 package com.wdg;
 
+import com.wdg.common.utils.MinioUtil;
 import com.wdg.common.utils.RedisCache;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @description: 项目启动前运行
@@ -14,8 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationInit implements ApplicationRunner {
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
+
+    @Resource
+    private MinioUtil minioUtil;
+
+    @Value("${minio.bucketName}")
+    private String bucketName;
 
     private StringBuilder msgStr = new StringBuilder();
 
@@ -25,6 +34,7 @@ public class ApplicationInit implements ApplicationRunner {
         msgStr.append("中间件测试开始\n");
         redisTest();
         mysqlTest();
+        minioTest();
         System.out.println(msgStr.toString());
     }
 
@@ -46,6 +56,18 @@ public class ApplicationInit implements ApplicationRunner {
      */
     private void mysqlTest() {
 
+    }
+
+    /**
+     * MinIo测试
+     */
+    private void minioTest() {
+        try {
+            boolean data = minioUtil.bucketExists(bucketName);
+            msgStr.append("minio连接   √\n");
+        } catch (Exception e) {
+            msgStr.append("minio连接   ×\n");
+        }
     }
 
 }

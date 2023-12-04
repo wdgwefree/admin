@@ -29,6 +29,8 @@ public class ControllerConfig implements WebMvcConfigurer {
         List<String> patterns = new ArrayList<>();
         patterns.add("/login");
         patterns.add("/wdg/test2");
+        patterns.add("/baseFile/uploadFile");
+        patterns.add("/baseFile/download");
 
 
         registry.addInterceptor(tokenInterceptor)
