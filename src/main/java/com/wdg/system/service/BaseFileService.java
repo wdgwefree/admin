@@ -1,4 +1,4 @@
-package com.wdg.base.service;
+package com.wdg.system.service;
 
 import com.wdg.common.result.MinioResult;
 import com.wdg.common.utils.MinioUtil;

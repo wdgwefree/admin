@@ -1,6 +1,6 @@
-package com.wdg.base.controller;
+package com.wdg.system.controller;
 
-import com.wdg.base.service.BaseFileService;
+import com.wdg.system.service.BaseFileService;
 import com.wdg.common.constant.FileConstants;
 import com.wdg.common.result.ApiResult;
 import com.wdg.common.result.MinioResult;

@@ -16,7 +16,7 @@ spring:
       max-request-size: 500MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/wdg_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3306/wdg?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
     username: root
     password: mysql1234
 
@@ -36,9 +36,9 @@ spring:
 
 mybatis-plus:
   # 指定包别名
-  typeAliasesPackage: com.wdg.demo.entity
-  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
-  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.wdg.**.entity
+  # mapper.xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath*:/mapper/**/*.xml
   # 以下配置均有默认值,可以不设置
   global-config:
     db-config:
