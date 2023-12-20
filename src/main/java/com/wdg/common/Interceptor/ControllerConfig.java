@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description: 添加拦截规则
- * @author: wdg
- * @create: 2023-11-24 17:01
+ * 自定义Spring MVC的配置
  */
 @Component
 public class ControllerConfig implements WebMvcConfigurer {
@@ -24,15 +22,8 @@ public class ControllerConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
-        //不需要拦截的接口
+        //不需要拦截的接口在此处添加,或者在接口方法上用@OpenAPI标注
         List<String> patterns = new ArrayList<>();
-        patterns.add("/login");
-        patterns.add("/wdg/test2");
-        patterns.add("/baseFile/uploadFile");
-        patterns.add("/baseFile/download");
-
-
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外

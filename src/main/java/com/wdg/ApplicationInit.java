@@ -40,7 +40,7 @@ public class ApplicationInit implements ApplicationRunner {
 
 
     /**
-     * Redis连接测试
+     * Redis测试
      */
     private void redisTest() {
         String pong = redisCache.ping();
@@ -52,14 +52,14 @@ public class ApplicationInit implements ApplicationRunner {
     }
 
     /**
-     * mysql连接测试
+     * mysql测试
      */
     private void mysqlTest() {
 
     }
 
     /**
-     * MinIo测试
+     * minio测试
      */
     private void minioTest() {
         try {

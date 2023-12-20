@@ -46,7 +46,7 @@ public class ApiResult implements Serializable {
         this.msg = resultCode.getMsg();
     }
 
-    private ApiResult(Integer code, String msg) {
+    public ApiResult(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -80,7 +80,7 @@ public class ApiResult implements Serializable {
      * @return
      */
     public static ApiResult error() {
-        return new ApiResult(ResultCode.ERROR.getCode(),ResultCode.ERROR.getMsg());
+        return new ApiResult(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
     }
 
 

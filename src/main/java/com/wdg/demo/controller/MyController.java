@@ -3,6 +3,7 @@ package com.wdg.demo.controller;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.jwt.JWTUtil;
+import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.result.ApiResult;
 import com.wdg.demo.dto.ParamVO;
 import io.swagger.annotations.Api;
@@ -34,12 +35,12 @@ public class MyController {
 
     @ApiOperation(value = "生成token")
     @GetMapping("/test2")
+    @OpenAPI
     public ApiResult test2() {
         Map<String, Object> map = new HashMap<>();
         map.put("name", "wdg");
         map.put("pwd", "123456");
         map.put("randomId", IdUtil.getSnowflakeNextIdStr());
-        map.put("expire_time", System.currentTimeMillis() + 1000*30);
         String token = JWTUtil.createToken(map, "temp".getBytes());
         return ApiResult.success(token);
     }

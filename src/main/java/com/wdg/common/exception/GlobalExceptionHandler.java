@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
         log.error("自定义的业务异常[BusinessException]：" + e.getMsg());
-        return ApiResult.businessException(e.toString());
+        return ApiResult.businessException(e.getMsg());
     }
 
     /**

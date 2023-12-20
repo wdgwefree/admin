@@ -4,18 +4,19 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.wdg.common.utils.ValidatedGroup;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
  * 用户信息表
  * </p>
- *
- * @author wdg
- * @since 2023-12-07
  */
 @Getter
 @Setter
@@ -28,6 +29,7 @@ public class SysUser implements Serializable {
      * 用户ID
      */
     @TableId(value = "user_id", type = IdType.AUTO)
+    @NotBlank(message = "userId不能为空", groups = {ValidatedGroup.Update.class})
     private Long userId;
 
     /**
@@ -37,10 +39,12 @@ public class SysUser implements Serializable {
     private Long deptId;
 
     /**
-     * 登录账号
+     * 用户账号
      */
-    @TableField("login_name")
-    private String loginName;
+    @TableField("user_account")
+    @NotBlank(message = "userAccount不能为空", groups = {ValidatedGroup.Insert.class})
+    @Length(min = 6, max = 20, message = "用户账号长度在3-20之间")
+    private String userAccount;
 
     /**
      * 用户昵称
@@ -82,6 +86,8 @@ public class SysUser implements Serializable {
      * 密码
      */
     @TableField("password")
+    @NotBlank(message = "password不能为空", groups = {ValidatedGroup.Insert.class})
+    @Length(min = 6, max = 32, message = "密码长度在6-20之间")
     private String password;
 
     /**
@@ -97,7 +103,7 @@ public class SysUser implements Serializable {
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0代表存在 1代表删除）
      */
     @TableField("del_flag")
     private String delFlag;
@@ -112,13 +118,13 @@ public class SysUser implements Serializable {
      * 最后登录时间
      */
     @TableField("login_date")
-    private LocalDateTime loginDate;
+    private Date loginDate;
 
     /**
      * 密码最后更新时间
      */
     @TableField("pwd_update_date")
-    private LocalDateTime pwdUpdateDate;
+    private Date pwdUpdateDate;
 
     /**
      * 创建者
@@ -130,7 +136,7 @@ public class SysUser implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新者
@@ -141,8 +147,8 @@ public class SysUser implements Serializable {
     /**
      * 更新时间
      */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
+    @TableField(value = "update_time", update = "now()")
+    private Date updateTime;
 
     /**
      * 备注

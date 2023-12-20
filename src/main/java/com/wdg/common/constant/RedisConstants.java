@@ -6,12 +6,8 @@ package com.wdg.common.constant;
 public class RedisConstants {
 
     /**
-     * 证书订单审核锁定key前缀
+     * 系统用户token前缀
      */
-    public static final String ORDER_EXAMINE_LOCK="order_examine_lock:";
+    public static final String SYS_USER_TOKEN="sys_user_token:";
 
-    /**
-     * 证书下载锁定key前缀
-     */
-    public static final String CERT_DOWNLOAD_LOCK="cert_download_lock:";
 }

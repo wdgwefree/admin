@@ -8,15 +8,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
  * 部门表
  * </p>
  *
- * @author wdg
- * @since 2023-12-07
+
  */
 @Getter
 @Setter
@@ -95,7 +94,7 @@ public class SysDept implements Serializable {
      * 创建时间
      */
     @TableField("create_time")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新者
@@ -107,7 +106,7 @@ public class SysDept implements Serializable {
      * 更新时间
      */
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }

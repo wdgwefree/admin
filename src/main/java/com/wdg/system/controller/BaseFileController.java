@@ -24,7 +24,7 @@ import java.util.List;
  * @create: 2023-12-01 18:27
  */
 @Api(tags = "文件")
-@RequestMapping("/baseFile")
+@RequestMapping("/base/file")
 @RestController
 public class BaseFileController {
 
