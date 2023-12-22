@@ -34,7 +34,7 @@ public class ApplicationInit implements ApplicationRunner {
         msgStr.append("中间件测试开始\n");
         redisTest();
         mysqlTest();
-        minioTest();
+        //minioTest();
         System.out.println(msgStr.toString());
     }
 

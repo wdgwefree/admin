@@ -24,6 +24,7 @@ public class ControllerConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //不需要拦截的接口在此处添加,或者在接口方法上用@OpenAPI标注
         List<String> patterns = new ArrayList<>();
+        patterns.add("/druid/**");
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外
