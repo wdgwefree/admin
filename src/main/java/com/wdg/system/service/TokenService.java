@@ -1,8 +1,15 @@
 package com.wdg.system.service;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
+import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.constant.RedisConstants;
+import com.wdg.common.result.ApiResult;
+import com.wdg.common.result.ResultCode;
+import com.wdg.common.utils.MyServletUtil;
 import com.wdg.common.utils.RedisCache;
 import com.wdg.system.dto.SysUserToken;
 import com.wdg.system.entity.SysUser;
@@ -11,15 +18,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
- * @author: wdg
- * @create: 2023-12-20 16:49
+ * Token服务类
  */
 @Component
 public class TokenService {
@@ -55,13 +60,91 @@ public class TokenService {
 
         SysUserToken sysUserToken = new SysUserToken();
         BeanUtils.copyProperties(sysUser, sysUserToken);
-        sysUserToken.setTokenStartTime(new Date());
-        sysUserToken.setTokenEndDate(new Date(System.currentTimeMillis() + Long.parseLong(expireTime) * 60 * 1000));
         sysUserToken.setTokenKey(tokenKey);
 
+        //获取登录IP
+        String clientIP = ServletUtil.getClientIP(MyServletUtil.getRequest());
+        sysUserToken.setLoginIp(clientIP);
+
         //存入redis
-        redisCache.setCacheObject(RedisConstants.SYS_USER_TOKEN + tokenKey, sysUserToken, Integer.valueOf(expireTime), TimeUnit.MINUTES);
+        redisCache.setCacheObject(getRedisKey(tokenKey), sysUserToken, Integer.valueOf(expireTime), TimeUnit.MINUTES);
 
         return JWTUtil.createToken(map, secret.getBytes());
     }
+
+
+    /**
+     * 验证JWT令牌的有效性,相差不足{{alarmTime}}分钟，自动刷新缓存
+     *
+     * @param response
+     * @param token
+     * @return
+     */
+    public boolean verifyToken(HttpServletResponse response, String token) {
+        if (StrUtil.isEmpty(token)) {
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token不存在"));
+            MyServletUtil.renderString(response, str);
+            return false;
+        }
+        boolean verify = false;
+        try {
+            verify = JWTUtil.verify(token, secret.getBytes());
+        } catch (Exception e) {
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token错误"));
+            MyServletUtil.renderString(response, str);
+            return false;
+        }
+        if (!verify) {
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token是无效的"));
+            MyServletUtil.renderString(response, str);
+            return false;
+        }
+        JWT jwt = JWTUtil.parseToken(token);
+        String tokenKey = jwt.getPayload("tokenKey").toString();
+        SysUserToken sysUserToken = redisCache.getCacheObject(getRedisKey(tokenKey));
+
+        if (sysUserToken == null) {
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token已过期"));
+            MyServletUtil.renderString(response, str);
+            return false;
+        }
+        long expire = redisCache.getExpire(getRedisKey(tokenKey));
+        if (expire < Long.parseLong(alarmTime) * 60 * 1000) {
+            redisCache.setCacheObject(getRedisKey(tokenKey), sysUserToken, Integer.valueOf(expireTime), TimeUnit.MINUTES);
+        }
+        return true;
+    }
+
+
+    /**
+     * 封装redis的key
+     *
+     * @param tokenKey
+     * @return
+     */
+    private String getRedisKey(String tokenKey) {
+        return RedisConstants.SYS_USER_TOKEN + tokenKey;
+    }
+
+
+    /**
+     * 删除token
+     *
+     * @param response
+     * @param token
+     */
+    public void delToken(HttpServletResponse response, String token) {
+        String str = "";
+        try {
+            JWT jwt = JWTUtil.parseToken(token);
+            String tokenKey = jwt.getPayload("tokenKey").toString();
+            redisCache.deleteObject(getRedisKey(tokenKey));
+            str = JSONUtil.toJsonStr(ApiResult.success("退出成功"));
+        } catch (Exception e) {
+            str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token是无效的"));
+        }
+        MyServletUtil.renderString(response, str);
+    }
+
+
 }

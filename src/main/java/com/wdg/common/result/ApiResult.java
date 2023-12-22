@@ -11,8 +11,7 @@ import java.io.Serializable;
 @Data
 public class ApiResult implements Serializable {
 
-    private static final long serialVersionUID = -7916154205057820567L;
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * 状态码
@@ -105,6 +104,10 @@ public class ApiResult implements Serializable {
         return new ApiResult(ResultCode.EXCEPTION_ERROR.getCode(), msg);
     }
 
+
+    public static ApiResult exception(Integer code, String msg) {
+        return new ApiResult(code, msg);
+    }
 
     /**
      * 自定义业务异常返回

@@ -19,8 +19,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
-        log.error("自定义的业务异常[BusinessException]：" + e.getMsg());
-        return ApiResult.businessException(e.getMsg());
+        log.error("手动抛出的异常: [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
+        return ApiResult.exception(e.getCode(), e.getMsg());
     }
 
     /**
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String msg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().get(0).getDefaultMessage();
             log.error("参数异常[MethodArgumentNotValidException]：" + e.getMessage());
-            return ApiResult.argumentException(msg);
+            return ApiResult.exception(msg);
         } else {
             log.error("异常[Exception]：" + e.getMessage());
             return ApiResult.exception(getExceptionMsg(e));

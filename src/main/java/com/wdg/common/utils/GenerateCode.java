@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import java.util.Collections;
 
 /**
- * @description:
- * @author: wdg
- * @create: 2023-12-07 11:45
+ * 用来生成代码
  */
 public class GenerateCode {
 
@@ -17,7 +15,7 @@ public class GenerateCode {
 
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/wdg?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8", "root", "mysql1234")
                 .globalConfig(builder -> {
-                        builder.author("wdg") // 设置作者
+                    builder.author("wdg") // 设置作者
                             //.enableSwagger() // 开启 swagger 模式
                             .outputDir("D://generator"); // 指定输出目录
                 })
@@ -27,7 +25,7 @@ public class GenerateCode {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "D://generator")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("base_dept") // 设置需要生成的表名
+                    builder.addInclude("sys_dept") // 设置需要生成的表名
                             .addTablePrefix("app_", "c_") // 设置过滤表前缀
                             .entityBuilder()  //开启Entity 策略配置
                             .enableLombok() //开启 lombok

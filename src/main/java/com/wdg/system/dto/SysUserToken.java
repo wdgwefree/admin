@@ -1,10 +1,7 @@
 package com.wdg.system.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wdg.system.entity.SysUser;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * @description: 存入Redis的实体
@@ -14,14 +11,14 @@ import java.util.Date;
 @Data
 public class SysUserToken extends SysUser {
 
-    //token开始时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date tokenStartTime;
-
-    //token过期时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date tokenEndDate;
-    
+    /**
+     * tokenKey
+     */
     private String tokenKey;
+
+    /**
+     * 登录ip
+     */
+    private String loginIp;
 
 }

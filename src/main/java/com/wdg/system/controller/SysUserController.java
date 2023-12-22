@@ -1,6 +1,6 @@
 package com.wdg.system.controller;
 
-import com.wdg.common.annotation.OpenAPI;
+import com.wdg.common.dto.PageData;
 import com.wdg.common.result.ApiResult;
 import com.wdg.common.utils.ValidatedGroup;
 import com.wdg.system.entity.SysUser;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -27,8 +28,7 @@ public class SysUserController extends BaseController {
      *
      * @return
      */
-    @PostMapping("/insertSysUser")
-    @OpenAPI
+    @PostMapping("/insert")
     public ApiResult insertSysUser(@Validated({ValidatedGroup.Insert.class}) @RequestBody SysUser sysUser) {
         return toApiResult(iSysUserService.insertSysUser(sysUser));
     }
@@ -38,8 +38,18 @@ public class SysUserController extends BaseController {
      *
      * @return
      */
-    @PostMapping("/updateSysUser")
+    @PostMapping("/update")
     public ApiResult updateSysUser(@RequestBody SysUser sysUser) {
         return toApiResult(iSysUserService.updateSysUser(sysUser));
     }
+
+    //分页查询系统用户
+    @PostMapping("/pageSelect")
+    public ApiResult selectSysUser() {
+        startPage();
+        List<SysUser> list = iSysUserService.list();
+        PageData pageData = getPageData(list);
+        return ApiResult.success(pageData);
+    }
+
 }

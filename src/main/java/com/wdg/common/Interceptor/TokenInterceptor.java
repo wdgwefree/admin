@@ -1,19 +1,15 @@
 package com.wdg.common.Interceptor;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.annotation.OpenAPI;
-import com.wdg.common.result.ApiResult;
-import com.wdg.common.result.ResultCode;
+import com.wdg.system.service.TokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.lang.reflect.Method;
 
 @Component
@@ -23,8 +19,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Value("${token.header}")
     private String header;
 
-    @Value("${token.secret}")
-    private String secret;
+    @Resource
+    private TokenService tokenService;
 
     /**
      * 在请求进入到Controller前进行拦截，有返回值。（返回true则将请求放行进入下一个拦截器，false则请求结束返回错误信息）
@@ -47,32 +43,13 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         String token = request.getHeader(header);//获取请求头中的令牌
-        if (StrUtil.isEmpty(token)) {
-            renderString(response, JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token不存在")));
+
+        if (request.getServletPath().contains("/system/logout")) {
+            tokenService.delToken(response,token);
             return false;
         }
-        boolean verify = JWTUtil.verify(token, secret.getBytes());
-        if (!verify) {
-            renderString(response, JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token验证失败")));
-            return false;
-        }
-        return true;
+        return tokenService.verifyToken(response, token);
     }
 
-    /**
-     * 将字符串渲染到客户端
-     *
-     * @param response 渲染对象
-     * @param msg      待渲染的字符串
-     */
-    private void renderString(HttpServletResponse response, String msg) {
-        try {
-            response.setStatus(200);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            response.getWriter().print(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

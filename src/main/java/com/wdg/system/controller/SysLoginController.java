@@ -5,10 +5,7 @@ import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.result.ApiResult;
 import com.wdg.system.dto.LoginBody;
 import com.wdg.system.service.SysLoginService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,12 +17,20 @@ public class SysLoginController extends BaseController {
     private SysLoginService sysLoginService;
 
     /**
-     * 登录系统
+     * 登录
      */
     @PostMapping("/login")
     @OpenAPI
     public ApiResult login(@RequestBody LoginBody loginBody) {
         String token = sysLoginService.login(loginBody);
         return ApiResult.success(token);
+    }
+
+    /**
+     * 注销
+     */
+    @GetMapping ("/logout")
+    public ApiResult logout() {
+        return ApiResult.success();
     }
 }

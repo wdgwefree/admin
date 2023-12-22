@@ -24,11 +24,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new BusinessException("账号已存在");
         }
         //对密码加密
-        String password = sysUser.getPassword();
-        String md5DigestAsHex = DigestUtils.md5DigestAsHex(password.getBytes());
-        sysUser.setPassword(md5DigestAsHex);
+        String encryptPassword = DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+        sysUser.setPassword(encryptPassword);
         sysUser.setDelFlag("0");
+        sysUser.setStatus("0");
         sysUser.setCreateTime(new Date());
+        sysUser.setUpdateTime(new Date());
         return save(sysUser);
     }
 

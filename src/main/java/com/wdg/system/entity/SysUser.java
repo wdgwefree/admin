@@ -89,13 +89,7 @@ public class SysUser implements Serializable {
     @NotBlank(message = "password不能为空", groups = {ValidatedGroup.Insert.class})
     @Length(min = 6, max = 32, message = "密码长度在6-20之间")
     private String password;
-
-    /**
-     * 盐加密
-     */
-    @TableField("salt")
-    private String salt;
-
+    
     /**
      * 帐号状态（0正常 1停用）
      */
@@ -109,40 +103,11 @@ public class SysUser implements Serializable {
     private String delFlag;
 
     /**
-     * 最后登录IP
-     */
-    @TableField("login_ip")
-    private String loginIp;
-
-    /**
-     * 最后登录时间
-     */
-    @TableField("login_date")
-    private Date loginDate;
-
-    /**
-     * 密码最后更新时间
-     */
-    @TableField("pwd_update_date")
-    private Date pwdUpdateDate;
-
-    /**
-     * 创建者
-     */
-    @TableField("create_by")
-    private String createBy;
-
-    /**
      * 创建时间
      */
     @TableField("create_time")
     private Date createTime;
 
-    /**
-     * 更新者
-     */
-    @TableField("update_by")
-    private String updateBy;
 
     /**
      * 更新时间

@@ -84,11 +84,6 @@ public class SysDept implements Serializable {
     @TableField("del_flag")
     private String delFlag;
 
-    /**
-     * 创建者
-     */
-    @TableField("create_by")
-    private String createBy;
 
     /**
      * 创建时间
@@ -96,11 +91,6 @@ public class SysDept implements Serializable {
     @TableField("create_time")
     private Date createTime;
 
-    /**
-     * 更新者
-     */
-    @TableField("update_by")
-    private String updateBy;
 
     /**
      * 更新时间

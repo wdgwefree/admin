@@ -2,10 +2,13 @@ package com.wdg.common.exception;
 
 import lombok.Getter;
 
+/**
+ * 自定义的异常，用于手动抛出
+ */
 @Getter
 public class BusinessException extends RuntimeException {
 
-    private String code;
+    private Integer code;
     private String msg;
 
 
@@ -16,7 +19,7 @@ public class BusinessException extends RuntimeException {
     }
 
     //用于指定错误信息
-    public BusinessException(String code, String msg) {
+    public BusinessException(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

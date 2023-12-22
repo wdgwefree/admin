@@ -14,15 +14,13 @@
         <result column="email" property="email" />
         <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
-        <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="update_by" property="updateBy" />
         <result column="update_time" property="updateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        dept_id, parent_id, ancestors, dept_name, dept_order, leader, phone, email, status, del_flag, create_by, create_time, update_by, update_time
+        dept_id, parent_id, ancestors, dept_name, dept_order, leader, phone, email, status, del_flag, create_time, update_time
     </sql>
 
 </mapper>
