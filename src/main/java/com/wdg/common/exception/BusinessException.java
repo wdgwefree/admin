@@ -3,7 +3,7 @@ package com.wdg.common.exception;
 import lombok.Getter;
 
 /**
- * 自定义的异常，用于手动抛出
+ * 用于手动抛出异常
  */
 @Getter
 public class BusinessException extends RuntimeException {

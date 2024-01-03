@@ -14,6 +14,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+    /**
+     * 处理 HTTP 500 错误(即未处理捕获的异常)
+     */
+    //@ExceptionHandler(Exception.class)
+    //@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    //public ApiResult handleInternalServerError(HttpServletRequest httpServletRequest, Exception ex) {
+    //    log.error("服务器内部错误: ", ex);
+    //    return new ApiResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误: " + ex.getMessage());
+    //}
+
     /**
      * 处理自定义的业务异常
      */

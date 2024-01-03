@@ -6,8 +6,6 @@ import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.result.ApiResult;
 import com.wdg.demo.dto.ParamVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +17,10 @@ import java.util.Map;
  * @author: wdg
  * @create: 2023-11-22 14:34
  */
-@Api(tags = "demo测试模块")
 @RequestMapping("/wdg")
 @RestController
 public class MyController {
 
-    @ApiOperation(value = "这个是测试test接口")
     @PostMapping("/test1")
     public ApiResult test1(@Validated @RequestBody ParamVO paramVO) {
         StopWatch stopWatch = new StopWatch();
@@ -33,7 +29,6 @@ public class MyController {
 
     }
 
-    @ApiOperation(value = "生成token")
     @GetMapping("/test2")
     @OpenAPI
     public ApiResult test2() {
