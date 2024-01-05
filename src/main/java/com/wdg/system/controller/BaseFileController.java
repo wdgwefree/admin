@@ -2,8 +2,8 @@ package com.wdg.system.controller;
 
 import com.wdg.system.service.BaseFileService;
 import com.wdg.common.constant.FileConstants;
-import com.wdg.common.result.ApiResult;
-import com.wdg.common.result.MinioResult;
+import com.wdg.common.dto.result.ApiResult;
+import com.wdg.common.dto.result.MinioResult;
 import com.wdg.common.utils.MinioUtil;
 
 import org.springframework.web.bind.annotation.GetMapping;

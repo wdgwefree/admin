@@ -2,8 +2,6 @@ package com.wdg.common.constant;
 
 /**
  * @description: 登录常量
- * @author: wdg
- * @create: 2023-11-21 14:02
  */
 public class LoginConstants {
 

@@ -1,5 +1,8 @@
 package com.wdg.common.constant;
 
+/**
+ * 状态常量
+ */
 public class StatusConstants {
 
     /**

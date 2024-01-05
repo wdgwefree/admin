@@ -1,5 +1,6 @@
-package com.wdg.common.result;
+package com.wdg.common.dto.result;
 
+import com.wdg.common.enums.ResultCode;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -104,6 +105,9 @@ public class ApiResult implements Serializable {
         return new ApiResult(ResultCode.EXCEPTION_ERROR.getCode(), msg);
     }
 
+    public static ApiResult exception(ResultCode resultCode) {
+        return new ApiResult(resultCode);
+    }
 
     public static ApiResult exception(Integer code, String msg) {
         return new ApiResult(code, msg);

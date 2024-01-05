@@ -1,6 +1,6 @@
 package com.wdg.system.service;
 
-import com.wdg.common.result.MinioResult;
+import com.wdg.common.dto.result.MinioResult;
 import com.wdg.common.utils.MinioUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

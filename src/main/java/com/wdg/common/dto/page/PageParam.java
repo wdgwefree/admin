@@ -1,4 +1,4 @@
-package com.wdg.common.dto;
+package com.wdg.common.dto.page;
 
 import lombok.Data;
 

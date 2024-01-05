@@ -1,11 +1,9 @@
-package com.wdg.common.result;
+package com.wdg.common.dto.result;
 
 import lombok.Data;
 
 /**
- * @description: minio的返回数据
- * @author: wdg
- * @create: 2023-12-01 18:03
+ * minio返回数据
  */
 @Data
 public class MinioResult {

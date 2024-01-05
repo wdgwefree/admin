@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @description: 项目启动前运行
- * @author: wdg
- * @create: 2023-11-20 17:01
+ * 项目启动前运行
  */
 @Component
 public class ApplicationInit implements ApplicationRunner {

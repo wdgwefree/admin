@@ -15,4 +15,6 @@ public interface ISysUserService extends IService<SysUser> {
     boolean insertSysUser(SysUser sysUser);
 
     boolean updateSysUser(SysUser sysUser);
+
+    boolean deleteSysUser(Long userId);
 }

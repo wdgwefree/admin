@@ -1,21 +1,18 @@
 package com.wdg.system.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.wdg.common.dto.PageData;
-import com.wdg.common.result.ApiResult;
+import com.wdg.common.dto.page.PageData;
+import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.utils.PageUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * @description: web层通用数据处理
  */
+@Slf4j
 public class BaseController {
-
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     /**
      * 响应返回结果
      *

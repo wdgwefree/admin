@@ -44,6 +44,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader(header);//获取请求头中的令牌
 
+        //注销逻辑
         if (request.getServletPath().contains("/system/logout")) {
             tokenService.delToken(response,token);
             return false;

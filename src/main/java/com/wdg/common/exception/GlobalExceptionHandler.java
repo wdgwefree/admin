@@ -1,8 +1,11 @@
 package com.wdg.common.exception;
 
-import com.wdg.common.result.ApiResult;
+import com.wdg.common.dto.result.ApiResult;
+import com.wdg.common.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -16,21 +19,11 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 处理 HTTP 500 错误(即未处理捕获的异常)
-     */
-    //@ExceptionHandler(Exception.class)
-    //@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    //public ApiResult handleInternalServerError(HttpServletRequest httpServletRequest, Exception ex) {
-    //    log.error("服务器内部错误: ", ex);
-    //    return new ApiResult(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误: " + ex.getMessage());
-    //}
-
-    /**
-     * 处理自定义的业务异常
+     * 处理手动抛出的的业务异常
      */
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
-        log.error("手动抛出的异常: [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
+        log.error("业务异常: [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
         return ApiResult.exception(e.getCode(), e.getMsg());
     }
 
@@ -44,8 +37,14 @@ public class GlobalExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String msg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().get(0).getDefaultMessage();
             log.error("参数异常[MethodArgumentNotValidException]：" + e.getMessage());
-            return ApiResult.exception(msg);
-        } else {
+            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), msg);
+        } else if (e instanceof HttpMessageNotReadableException) {
+            log.error("参数异常[HttpMessageNotReadableException]：" + e.getMessage());
+            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), "请求参数类型不匹配");
+        } else if (e instanceof MissingServletRequestParameterException) {
+            log.error("参数异常[MissingServletRequestParameterException]：" + e.getMessage());
+            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), getExceptionMsg(e));
+        }else{
             log.error("异常[Exception]：" + e.getMessage());
             return ApiResult.exception(getExceptionMsg(e));
         }

@@ -1,7 +1,7 @@
 package com.wdg.system.controller;
 
-import com.wdg.common.dto.PageData;
-import com.wdg.common.result.ApiResult;
+import com.wdg.common.dto.page.PageData;
+import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.utils.ValidatedGroup;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.service.ISysUserService;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -43,13 +44,23 @@ public class SysUserController extends BaseController {
         return toApiResult(iSysUserService.updateSysUser(sysUser));
     }
 
-    //分页查询系统用户
+    /**
+     * 分页查询系统用户
+     *
+     * @return
+     */
     @PostMapping("/pageSelect")
     public ApiResult selectSysUser() {
         startPage();
         List<SysUser> list = iSysUserService.list();
         PageData pageData = getPageData(list);
         return ApiResult.success(pageData);
+    }
+
+    @PostMapping("/delete")
+    public ApiResult deleteSysUser(@RequestBody Map<String, Object> map) {
+        Long userId = Long.valueOf(map.get("userId").toString());
+        return toApiResult(iSysUserService.deleteSysUser(userId));
     }
 
 }

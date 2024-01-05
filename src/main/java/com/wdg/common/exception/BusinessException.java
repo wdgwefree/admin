@@ -1,5 +1,6 @@
 package com.wdg.common.exception;
 
+import com.wdg.common.enums.ResultCode;
 import lombok.Getter;
 
 /**
@@ -22,5 +23,11 @@ public class BusinessException extends RuntimeException {
     public BusinessException(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    //用于指定错误信息
+    public BusinessException(ResultCode resultCode) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
     }
 }

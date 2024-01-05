@@ -1,7 +1,7 @@
 package com.wdg.common.utils;
 
 import cn.hutool.core.util.IdUtil;
-import com.wdg.common.result.MinioResult;
+import com.wdg.common.dto.result.MinioResult;
 import io.minio.*;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;

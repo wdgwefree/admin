@@ -4,7 +4,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.annotation.OpenAPI;
-import com.wdg.common.result.ApiResult;
+import com.wdg.common.dto.result.ApiResult;
 import com.wdg.demo.dto.ParamVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

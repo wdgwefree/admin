@@ -2,7 +2,7 @@ package com.wdg.system.controller;
 
 
 import com.wdg.common.annotation.OpenAPI;
-import com.wdg.common.result.ApiResult;
+import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginBody;
 import com.wdg.system.service.SysLoginService;
 import org.springframework.web.bind.annotation.*;

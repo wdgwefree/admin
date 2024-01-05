@@ -2,8 +2,6 @@ package com.wdg.common.constant;
 
 /**
  * @description: 文件常量
- * @author: wdg
- * @create: 2023-12-04 09:47
  */
 public class FileConstants {
 
