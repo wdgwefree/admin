@@ -5,12 +5,14 @@ import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginBody;
 import com.wdg.system.service.SysLoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("system")
+@Slf4j
 public class SysLoginController extends BaseController {
 
     @Resource
@@ -22,6 +24,12 @@ public class SysLoginController extends BaseController {
     @PostMapping("/login")
     @OpenAPI
     public ApiResult login(@RequestBody LoginBody loginBody) {
+        // 日志输出
+        log.error("22222222222222");
+        log.warn("warn");
+        log.info("111111111111111111111111111");
+        log.debug("debug"); // logback默认级别
+        log.trace("trace");
         String token = sysLoginService.login(loginBody);
         return ApiResult.success(token);
     }
