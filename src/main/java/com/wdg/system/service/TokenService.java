@@ -9,9 +9,10 @@ import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.constant.RedisConstants;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.enums.ResultCode;
+import com.wdg.common.exception.BusinessException;
 import com.wdg.common.utils.MyServletUtil;
 import com.wdg.common.utils.RedisCache;
-import com.wdg.system.dto.SysUserToken;
+import com.wdg.system.dto.SysUserVO;
 import com.wdg.system.entity.SysUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,10 @@ public class TokenService {
     @Value("${token.alarmTime}")
     private String alarmTime;
 
+    // 令牌自定义标识
+    @Value("${token.header}")
+    private String header;
+
     @Resource
     private RedisCache redisCache;
 
@@ -58,16 +63,16 @@ public class TokenService {
         map.put("userAccount", sysUser.getUserAccount());
         map.put("tokenKey", tokenKey);
 
-        SysUserToken sysUserToken = new SysUserToken();
-        BeanUtils.copyProperties(sysUser, sysUserToken);
-        sysUserToken.setTokenKey(tokenKey);
+        SysUserVO sysUserVO = new SysUserVO();
+        BeanUtils.copyProperties(sysUser, sysUserVO);
+        sysUserVO.setTokenKey(tokenKey);
 
         //获取登录IP
         String clientIP = ServletUtil.getClientIP(MyServletUtil.getRequest());
-        sysUserToken.setLoginIp(clientIP);
+        sysUserVO.setLoginIp(clientIP);
 
         //存入redis
-        redisCache.setCacheObject(getRedisKey(tokenKey), sysUserToken, Integer.valueOf(expireTime), TimeUnit.MINUTES);
+        redisCache.setCacheObject(getRedisKey(tokenKey), sysUserVO, Integer.valueOf(expireTime), TimeUnit.MINUTES);
 
         return JWTUtil.createToken(map, secret.getBytes());
     }
@@ -101,16 +106,16 @@ public class TokenService {
         }
         JWT jwt = JWTUtil.parseToken(token);
         String tokenKey = jwt.getPayload("tokenKey").toString();
-        SysUserToken sysUserToken = redisCache.getCacheObject(getRedisKey(tokenKey));
+        SysUserVO sysUserVO = redisCache.getCacheObject(getRedisKey(tokenKey));
 
-        if (sysUserToken == null) {
+        if (sysUserVO == null) {
             String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token已过期"));
             MyServletUtil.renderString(response, str);
             return false;
         }
         long expire = redisCache.getExpire(getRedisKey(tokenKey));
         if (expire < Long.parseLong(alarmTime) * 60 * 1000) {
-            redisCache.setCacheObject(getRedisKey(tokenKey), sysUserToken, Integer.valueOf(expireTime), TimeUnit.MINUTES);
+            redisCache.setCacheObject(getRedisKey(tokenKey), sysUserVO, Integer.valueOf(expireTime), TimeUnit.MINUTES);
         }
         return true;
     }
@@ -146,5 +151,27 @@ public class TokenService {
         MyServletUtil.renderString(response, str);
     }
 
+    public SysUserVO getUserInfo() {
+        String token = MyServletUtil.getRequest().getHeader(header);
+        if (StrUtil.isEmpty(token)) {
+            throw new BusinessException(ResultCode.TOKEN_NOT_FOUND);
+        }
+        boolean verify = false;
+        try {
+            verify = JWTUtil.verify(token, secret.getBytes());
+        } catch (Exception e) {
+            throw new BusinessException(ResultCode.TOKEN_ERROR);
+        }
+        if (!verify) {
+            throw new BusinessException(ResultCode.TOKEN_INVALID);
+        }
+        JWT jwt = JWTUtil.parseToken(token);
+        String tokenKey = jwt.getPayload("tokenKey").toString();
+        SysUserVO sysUserVO = redisCache.getCacheObject(getRedisKey(tokenKey));
 
+        if (sysUserVO == null) {
+            throw new BusinessException(ResultCode.TOKEN_EXPIRED);
+        }
+        return sysUserVO;
+    }
 }

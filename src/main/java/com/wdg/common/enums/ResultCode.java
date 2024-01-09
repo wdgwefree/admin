@@ -7,7 +7,15 @@ public enum ResultCode {
     EXCEPTION_ERROR(10001, "运行时异常"),
     BUSINESS_EXCEPTION(10002, "自定义业务异常"),
     ARGUMENT_EXCEPTION(10003, "请求参数异常"),
-    TOKEN_EXCEPTION(10000,"token异常"),
+
+    //token相关异常
+    TOKEN_EXCEPTION(10001,"token异常"),
+    TOKEN_NOT_FOUND(10002,"token不存在"),
+    TOKEN_EXPIRED(10003,"token已过期"),
+    TOKEN_INVALID(10004,"token无效"),
+    TOKEN_ERROR(10005,"token错误"),
+    TOKEN_OVERDUE(10006,"token即将过期"),
+    TOKEN_INVALID_REFRESH(10007,"刷新token无效"),
 
 
     //用户相关异常
