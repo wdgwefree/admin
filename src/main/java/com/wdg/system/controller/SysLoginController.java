@@ -24,12 +24,6 @@ public class SysLoginController extends BaseController {
     @PostMapping("/login")
     @OpenAPI
     public ApiResult login(@RequestBody LoginBody loginBody) {
-        // 日志输出
-        log.error("22222222222222");
-        log.warn("warn");
-        log.info("111111111111111111111111111");
-        log.debug("debug"); // logback默认级别
-        log.trace("trace");
         String token = sysLoginService.login(loginBody);
         return ApiResult.success(token);
     }

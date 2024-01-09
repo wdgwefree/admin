@@ -2,12 +2,15 @@ package com.wdg.common.exception;
 
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.enums.ResultCode;
+import com.wdg.common.utils.MyServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 注解@RestControllerAdvice和@ExceptionHandler会捕获所有Rest接口的异常并封装成我们定义的HttpResult的结果集返回
@@ -23,7 +26,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
-        log.error("业务异常: [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
+        HttpServletRequest request = MyServletUtil.getRequest();
+        String servletPath = request.getServletPath();
+        log.error("请求 "+servletPath+" : [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
         return ApiResult.exception(e.getCode(), e.getMsg());
     }
 

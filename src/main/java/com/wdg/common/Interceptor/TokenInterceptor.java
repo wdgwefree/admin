@@ -28,7 +28,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        System.out.println("请求路径:" + request.getServletPath() + "进入拦截器=======preHandle========");
+        System.out.println("请求路径:" + request.getServletPath() + " 进入拦截器=======preHandle========");
 
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
