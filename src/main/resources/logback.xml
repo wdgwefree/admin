@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR-->
     <!-- 日志存放路径 -->
     <property name="log.path" value="D:/Logs/wdgAdmin/" />
     <!-- 日志输出格式 -->
     <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
     <!--<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />-->
     <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n" />
-
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,13 +18,13 @@
     <!-- 系统日志输出 -->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/sys-info.log</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
+        <!--每个文件限制 50MB,每日滚动，最多30个文件，归档文件限制5G-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <MaxFileSize>50MB</MaxFileSize>
+            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </triggeringPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
@@ -79,14 +79,11 @@
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn" />
 
-    <root level="info">
-        <appender-ref ref="console" />
-    </root>
-
     <!--系统操作日志配置-->
     <root level="info">
         <appender-ref ref="file_info" />
         <appender-ref ref="file_error" />
+        <appender-ref ref="console" />
     </root>
 
     <!--系统用户操作日志-->

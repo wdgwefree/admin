@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 注解@RestControllerAdvice和@ExceptionHandler会捕获所有Rest接口的异常并封装成我们定义的HttpResult的结果集返回
+ * 全局异常处理器，专门用于处理 REST API 的异常情况
  * 但是：处理不了拦截器里的异常!!!
  */
 @Slf4j
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     public ApiResult handleException(BusinessException e) {
         HttpServletRequest request = MyServletUtil.getRequest();
         String servletPath = request.getServletPath();
-        log.error("请求 "+servletPath+" : [异常码：" + e.getCode() + "，异常信息：" + e.getMsg() + "]");
+        log.error("请求 "+servletPath+" : [code：{" + e.getCode() + "}，msg：{" + e.getMsg() + "}]");
         return ApiResult.exception(e.getCode(), e.getMsg());
     }
 
