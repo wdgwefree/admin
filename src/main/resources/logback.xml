@@ -8,10 +8,12 @@
     <!--<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />-->
     <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n" />
 
+
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -19,12 +21,11 @@
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/sys-info.log</file>
         <!--每个文件限制 50MB,每日滚动，最多30个文件，归档文件限制5G-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <MaxFileSize>50MB</MaxFileSize>
-            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
             <maxHistory>30</maxHistory>
-            <totalSizeCap>5GB</totalSizeCap>
-        </triggeringPolicy>
+        </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
@@ -43,8 +44,8 @@
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
+            <fileNamePattern>${log.path}/sys-error.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -65,19 +66,14 @@
         <file>${log.path}/sys-user.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
+            <fileNamePattern>${log.path}/sys-user.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
     </appender>
-
-    <!-- 系统模块日志级别控制  -->
-    <logger name="com.wdg" level="info" />
-    <!-- Spring日志级别控制  -->
-    <logger name="org.springframework" level="warn" />
 
     <!--系统操作日志配置-->
     <root level="info">
@@ -90,4 +86,9 @@
     <logger name="sys-user" level="info">
         <appender-ref ref="sys-user"/>
     </logger>
+    <!-- 系统模块日志级别控制  -->
+    <logger name="com.wdg" level="info" />
+    <!-- Spring日志级别控制  -->
+    <logger name="org.springframework" level="warn" />
+
 </configuration>

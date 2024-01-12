@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public class SysUserVO extends SysUser {
+public class LoginTokenDTO extends SysUser {
 
     /**
      * tokenKey

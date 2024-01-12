@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.utils.PageUtil;
-import com.wdg.system.dto.SysUserVO;
+import com.wdg.system.dto.LoginTokenDTO;
 import com.wdg.system.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,8 +59,8 @@ public class BaseController {
     /**
      * 获取用户缓存信息(开放接口无法使用！)
      */
-    public SysUserVO getSysUserVo() {
-        SysUserVO userInfo = tokenService.getUserInfo();
+    public LoginTokenDTO getSysUserVo() {
+        LoginTokenDTO userInfo = tokenService.getUserInfo();
         return userInfo;
     }
 }

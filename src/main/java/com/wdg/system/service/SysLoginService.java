@@ -7,7 +7,6 @@ import com.wdg.common.exception.BusinessException;
 import com.wdg.system.dto.LoginBody;
 import com.wdg.system.entity.SysUser;
 import org.springframework.stereotype.Component;
-import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 
@@ -31,8 +30,7 @@ public class SysLoginService {
             throw new BusinessException(ResultCode.USER_NOT_FOUND);
         }
         String realPwd = sysUser.getPassword();
-        String md5Pwd = DigestUtils.md5DigestAsHex(password.getBytes());
-        if (!md5Pwd.equals(realPwd)) {
+        if (!realPwd.equals(password)) {
             throw new BusinessException(ResultCode.USER_PASSWORD_ERROR);
         }
         if (sysUser.getStatus().equals("1")) {

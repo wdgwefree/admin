@@ -1,7 +1,8 @@
 package com.wdg.system.service;
 
-import com.wdg.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wdg.system.dto.SysUserDTO;
+import com.wdg.system.entity.SysUser;
 
 /**
  * <p>
@@ -12,9 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserService extends IService<SysUser> {
 
-    boolean insertSysUser(SysUser sysUser);
+    boolean insertSysUser(SysUserDTO sysUserDTO);
 
-    boolean updateSysUser(SysUser sysUser);
+    boolean updateSysUser(SysUserDTO sysUserDTO);
 
     boolean deleteSysUser(Long userId);
 }

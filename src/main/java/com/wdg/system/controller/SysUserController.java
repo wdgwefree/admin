@@ -3,7 +3,8 @@ package com.wdg.system.controller;
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.utils.ValidatedGroup;
-import com.wdg.system.dto.SysUserVO;
+import com.wdg.system.dto.SysUserDTO;
+import com.wdg.system.dto.LoginTokenDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.service.ISysUserService;
 import org.springframework.validation.annotation.Validated;
@@ -31,8 +32,8 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/insert")
-    public ApiResult insertSysUser(@Validated({ValidatedGroup.Insert.class}) @RequestBody SysUser sysUser) {
-        return toApiResult(iSysUserService.insertSysUser(sysUser));
+    public ApiResult insertSysUser(@Validated({ValidatedGroup.Insert.class}) @RequestBody SysUserDTO sysUserDTO) {
+        return toApiResult(iSysUserService.insertSysUser(sysUserDTO));
     }
 
     /**
@@ -41,8 +42,8 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/update")
-    public ApiResult updateSysUser(@RequestBody SysUser sysUser) {
-        return toApiResult(iSysUserService.updateSysUser(sysUser));
+    public ApiResult updateSysUser(@RequestBody SysUserDTO sysUserDTO) {
+        return toApiResult(iSysUserService.updateSysUser(sysUserDTO));
     }
 
     /**
@@ -52,8 +53,8 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/pageSelect")
     public ApiResult selectSysUser() {
-        SysUserVO sysUserVo = getSysUserVo();
-        System.out.println(sysUserVo);
+        LoginTokenDTO loginTokenDTO = getSysUserVo();
+        System.out.println(loginTokenDTO);
         startPage();
         List<SysUser> list = iSysUserService.list();
         PageData pageData = getPageData(list);
