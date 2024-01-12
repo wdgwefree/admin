@@ -151,24 +151,15 @@ public class TokenService {
         MyServletUtil.renderString(response, str);
     }
 
-    public LoginTokenDTO getUserInfo() {
+    /**
+     * 获取当前登录用户信息
+     * @return
+     */
+    public LoginTokenDTO getLoginInfo() {
         String token = MyServletUtil.getRequest().getHeader(header);
-        if (StrUtil.isEmpty(token)) {
-            throw new BusinessException(ResultCode.TOKEN_NOT_FOUND);
-        }
-        boolean verify = false;
-        try {
-            verify = JWTUtil.verify(token, secret.getBytes());
-        } catch (Exception e) {
-            throw new BusinessException(ResultCode.TOKEN_ERROR);
-        }
-        if (!verify) {
-            throw new BusinessException(ResultCode.TOKEN_INVALID);
-        }
         JWT jwt = JWTUtil.parseToken(token);
         String tokenKey = jwt.getPayload("tokenKey").toString();
         LoginTokenDTO loginTokenDTO = redisCache.getCacheObject(getRedisKey(tokenKey));
-
         if (loginTokenDTO == null) {
             throw new BusinessException(ResultCode.TOKEN_EXPIRED);
         }

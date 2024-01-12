@@ -4,7 +4,6 @@ import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.utils.ValidatedGroup;
 import com.wdg.system.dto.SysUserDTO;
-import com.wdg.system.dto.LoginTokenDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.service.ISysUserService;
 import org.springframework.validation.annotation.Validated;
@@ -53,8 +52,6 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/pageSelect")
     public ApiResult selectSysUser() {
-        LoginTokenDTO loginTokenDTO = getSysUserVo();
-        System.out.println(loginTokenDTO);
         startPage();
         List<SysUser> list = iSysUserService.list();
         PageData pageData = getPageData(list);

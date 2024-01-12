@@ -59,8 +59,8 @@ public class BaseController {
     /**
      * 获取用户缓存信息(开放接口无法使用！)
      */
-    public LoginTokenDTO getSysUserVo() {
-        LoginTokenDTO userInfo = tokenService.getUserInfo();
-        return userInfo;
+    public LoginTokenDTO getLoginTokenDTO() {
+        LoginTokenDTO loginTokenDTO = tokenService.getLoginInfo();
+        return loginTokenDTO;
     }
 }
