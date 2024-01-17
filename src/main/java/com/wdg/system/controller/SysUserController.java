@@ -58,6 +58,9 @@ public class SysUserController extends BaseController {
         return ApiResult.success(pageData);
     }
 
+    /**
+     * 删除用户
+     */
     @PostMapping("/delete")
     public ApiResult deleteSysUser(@RequestBody Map<String, Object> map) {
         Long userId = Long.valueOf(map.get("userId").toString());

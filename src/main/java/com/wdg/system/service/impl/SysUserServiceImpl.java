@@ -57,9 +57,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean deleteSysUser(Long userId) {
         SysUser user = getById(userId);
-        if (user == null) {
+        if (user == null||user.getDelFlag().equals(StatusConstants.DELETED_USER_TRUE)) {
             throw new BusinessException(ResultCode.USER_NOT_FOUND);
-        };
+        }
         LambdaUpdateWrapper<SysUser> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(SysUser::getDelFlag, StatusConstants.DELETED_USER_TRUE)
                 .eq(SysUser::getUserId, userId);

@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.wdg.*.mapper")
-public class DemoApplication {
+public class AdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(AdminApplication.class, args);
         System.out.println("项目启动成功");
     }
 

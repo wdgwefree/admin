@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.math.BigInteger;
 
 @SpringBootTest
-class DemoApplicationTests {
+class AdminApplicationTests {
 
     @Resource
     private RedisCache redisCache;
