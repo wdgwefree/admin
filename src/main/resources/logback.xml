@@ -91,4 +91,6 @@
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn" />
 
+    <logger name="org.apache.ibatis" level="warn" />
+
 </configuration>
