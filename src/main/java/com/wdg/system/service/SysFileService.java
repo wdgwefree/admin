@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @create: 2023-12-01 18:33
  */
 @Service
-public class BaseFileService {
+public class SysFileService {
 
     @Resource
     private MinioUtil minioUtil;

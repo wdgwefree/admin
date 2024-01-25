@@ -1,6 +1,6 @@
 package com.wdg.system.controller;
 
-import com.wdg.system.service.BaseFileService;
+import com.wdg.system.service.SysFileService;
 import com.wdg.common.constant.FileConstants;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.dto.result.MinioResult;
@@ -18,28 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@RequestMapping("/base/file")
+@RequestMapping("/system/file")
 @RestController
 public class BaseFileController {
 
     @Resource
-    private BaseFileService baseFileService;
+    private SysFileService sysFileService;
 
     @Resource
     private MinioUtil minioUtil;
 
+    /**
+     * 上传文件列表
+     */
     @PostMapping("/uploadFile")
     public ApiResult uploadFile(List<MultipartFile> files) {
         ArrayList<MinioResult> minioResults = new ArrayList<>();
         for (MultipartFile file : files) {
-            MinioResult minioResult = baseFileService.uploadFile(file, FileConstants.USER_IMAGES);
+            MinioResult minioResult = sysFileService.uploadFile(file, FileConstants.USER_IMAGES);
             minioResults.add(minioResult);
         }
         return ApiResult.success(minioResults);
     }
 
     @GetMapping("/download")
-    public void downloadFile(HttpServletResponse response,String fullPath, String fileName){
+    public void downloadFile(HttpServletResponse response, String fullPath, String fileName) {
         try {
             minioUtil.downLoadFile(response, fullPath, fileName);
         } catch (Exception e) {
