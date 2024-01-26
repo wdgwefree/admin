@@ -1,7 +1,8 @@
 package com.wdg.common.Interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * 自定义Spring MVC的配置
  */
-@Component
+@Configuration
 public class ControllerConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -28,5 +29,13 @@ public class ControllerConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*");
     }
 }
