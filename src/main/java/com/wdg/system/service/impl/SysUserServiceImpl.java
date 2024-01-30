@@ -26,7 +26,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (user != null) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST);
         }
-        //对密码加密
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserDTO, sysUser);
         return save(sysUser);
