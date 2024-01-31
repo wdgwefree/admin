@@ -1,13 +1,8 @@
 package com.wdg.common.utils;
 
 import cn.hutool.core.codec.Base64;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 
 /**
  * @description: 非对称加密-RSA（公钥加密，私钥解密）
@@ -24,15 +19,15 @@ public class RSAUtil {
 
 
     //用于生成公钥私钥的base64
-    public static void main(String[] args) {
-        KeyPair pair = SecureUtil.generateKeyPair("RSA",1024);
-        PrivateKey aPrivate = pair.getPrivate();
-        PublicKey aPublic = pair.getPublic();
-        String private_key = Base64.encode(aPrivate.getEncoded());
-        String public_key = Base64.encode(aPublic.getEncoded());
-        System.out.println(public_key);
-        System.out.println(private_key + "\n");
-    }
+    //public static void main(String[] args) {
+    //    KeyPair pair = SecureUtil.generateKeyPair("RSA",1024);
+    //    PrivateKey aPrivate = pair.getPrivate();
+    //    PublicKey aPublic = pair.getPublic();
+    //    String private_key = Base64.encode(aPrivate.getEncoded());
+    //    String public_key = Base64.encode(aPublic.getEncoded());
+    //    System.out.println(public_key);
+    //    System.out.println(private_key + "\n");
+    //}
 
     /**
      * 自己的公钥加密
