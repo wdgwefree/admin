@@ -27,14 +27,9 @@ public class MinIoConfig {
      */
     @Bean
     public MinioClient minioClient() {
-        try {
-            return MinioClient.builder()
-                    .endpoint(endpoint)
-                    .credentials(accessKey, secretKey)
-                    .build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error creating MinioClient", e);
-        }
+        return MinioClient.builder()
+                .endpoint(endpoint)
+                .credentials(accessKey, secretKey)
+                .build();
     }
 }
