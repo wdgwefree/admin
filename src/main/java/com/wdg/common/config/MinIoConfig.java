@@ -1,12 +1,10 @@
 package com.wdg.common.config;
 
 import io.minio.MinioClient;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Data
 @Configuration
 public class MinIoConfig {
 
@@ -29,9 +27,14 @@ public class MinIoConfig {
      */
     @Bean
     public MinioClient minioClient() {
-        return MinioClient.builder()
-                .endpoint(endpoint)
-                .credentials(accessKey, secretKey)
-                .build();
+        try {
+            return MinioClient.builder()
+                    .endpoint(endpoint)
+                    .credentials(accessKey, secretKey)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error creating MinioClient", e);
+        }
     }
 }
