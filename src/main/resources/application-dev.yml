@@ -6,51 +6,58 @@ spring:
     url: jdbc:mysql://81.70.190.102:50307/wdg?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
     username: root
     password: TXroot123.
-    # 初始连接数
-    initialSize: 5
-    # 最小连接池数量
-    minIdle: 10
-    # 最大连接池数量
-    maxActive: 20
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    # 配置一个连接在池中最大生存的时间，单位是毫秒
-    maxEvictableIdleTimeMillis: 900000
-    # 配置检测连接是否有效
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    webStatFilter:
-      enabled: true
 
-    # 配置监控服务器
-    statViewServlet:
-      enabled: true
-      url-pattern: /druid/*
-      login-username: admin
-      login-password: 123456
+    # 连接池配置
+    druid:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
 
-    # 慢 SQL 监控
-    filter:
-      stat:
+      #监控统计信息
+      webStatFilter:
+        enabled: false
+
+      # Druid监控配置
+      statViewServlet:
         enabled: true
-        log-slow-sql: true
-        slow-sql-millis: 1000
-        merge-sql: true
-      wall:
-        config:
-          multi-statement-allow: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: 123456
+
+      # 慢SQL监控
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        # sql防火墙
+        wall:
+          config:
+            #允许一次执行多条 SQL 语句，即一个语句包含多个;
+            multi-statement-allow: true
 
   #redis配置
   redis:
     database: 6 # 数据库索引 默认为0
-    host: localhost    # redis服务器地址
-    port: 6379    # 端口号
+    host: 81.70.190.102    # redis服务器地址
+    port: 6973    # 端口号
     password: redis1234    # 密码（默认为空）
     timeout: 5000 # 连接超时时间（毫秒）
     jedis:
