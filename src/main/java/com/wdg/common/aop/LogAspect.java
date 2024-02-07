@@ -3,6 +3,7 @@ package com.wdg.common.aop;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
@@ -18,14 +19,6 @@ public class LogAspect {
     public void LogInOut() {
     }
 
-
-    //@Before("LogInOut()")
-    //public void logMethodEntry(JoinPoint joinPoint) {
-    //    String methodName = joinPoint.getSignature().toShortString();
-    //    Object[] args = joinPoint.getArgs();
-    //    log.info("方法: {} 入参: {}", methodName, args);
-    //}
-
     @AfterReturning(pointcut = "LogInOut()", returning = "result")
     public void logMethodExit(JoinPoint joinPoint, Object result) {
         StringBuffer infoStr = new StringBuffer();
@@ -38,5 +31,18 @@ public class LogAspect {
 
         log.info(infoStr.toString());
     }
+
+    @AfterThrowing(pointcut = "LogInOut()", throwing = "e")
+    public void logMethodException(JoinPoint joinPoint, Throwable e) {
+        StringBuffer str = new StringBuffer();
+
+        StringBuffer argStr = new StringBuffer("参数: ");
+        for (Object arg : joinPoint.getArgs()) {
+            argStr.append(arg.toString() + "  ");
+        }
+        str.append("方法: " + joinPoint.getSignature().toShortString() + argStr + " 异常: " + e.getMessage());
+        log.error(str.toString());
+    }
+
 
 }

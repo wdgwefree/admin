@@ -1,7 +1,6 @@
 package com.wdg.system.controller;
 
 
-import com.wdg.common.annotation.LogInOut;
 import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginBody;
@@ -25,7 +24,6 @@ public class SysLoginController extends BaseController {
      */
     @PostMapping("/login")
     @OpenAPI
-    @LogInOut
     public ApiResult login(@Validated @RequestBody LoginBody loginBody) {
         String token = sysLoginService.login(loginBody);
         return ApiResult.success(token);
