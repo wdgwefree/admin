@@ -7,12 +7,14 @@ import com.wdg.common.exception.BusinessException;
 import com.wdg.common.utils.RSAUtil;
 import com.wdg.system.dto.LoginBody;
 import com.wdg.system.entity.SysUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 
 @Component
+@Slf4j
 public class SysLoginService {
 
     @Resource
@@ -31,9 +33,13 @@ public class SysLoginService {
         if (sysUser == null) {
             throw new BusinessException(ResultCode.USER_NOT_FOUND);
         }
-        //RSA私钥解密使用MD5加密
-        password = RSAUtil.decryptByPrivateKey(password);
-        password= DigestUtils.md5DigestAsHex(password.getBytes());
+        //RSA私钥解密后使用MD5加密
+        try {
+            password = RSAUtil.decryptByPrivateKey(password);
+            password= DigestUtils.md5DigestAsHex(password.getBytes());
+        } catch (Exception e) {
+            throw new BusinessException(ResultCode.USER_PASSWORD_ERROR);
+        }
 
         String realPwd = sysUser.getPassword();
         if (!realPwd.equals(password)) {

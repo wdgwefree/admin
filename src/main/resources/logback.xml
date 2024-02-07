@@ -2,12 +2,11 @@
 <configuration>
     <!-- TRACE < DEBUG < INFO < WARN < ERROR-->
     <!-- 日志存放路径 -->
-    <property name="log.path" value="D:/Logs/wdgAdmin/" />
+    <property name="log.path" value="D:/Logs/wdgAdmin/"/>
     <!-- 日志输出格式 -->
     <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
     <!--<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />-->
-    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n" />
-
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -17,7 +16,7 @@
         </encoder>
     </appender>
 
-    <!-- 系统日志输出 -->
+    <!-- 系统info日志输出 -->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/sys-info.log</file>
         <!--每个文件限制 50MB,每日滚动，最多30个文件，归档文件限制5G-->
@@ -39,6 +38,7 @@
         </filter>
     </appender>
 
+    <!-- 系统error日志输出 -->
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/sys-error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
@@ -61,36 +61,18 @@
         </filter>
     </appender>
 
-    <!-- 用户访问日志输出  -->
-    <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/sys-user.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/sys-user.%d{yyyy-MM-dd}.zip</fileNamePattern>
-            <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
-    </appender>
-
     <!--系统操作日志配置-->
     <root level="info">
-        <appender-ref ref="file_info" />
-        <appender-ref ref="file_error" />
-        <appender-ref ref="console" />
+        <appender-ref ref="file_info"/>
+        <appender-ref ref="file_error"/>
+        <appender-ref ref="console"/>
     </root>
 
-    <!--系统用户操作日志-->
-    <logger name="sys-user" level="info">
-        <appender-ref ref="sys-user"/>
-    </logger>
     <!-- 系统模块日志级别控制  -->
-    <logger name="com.wdg" level="info" />
+    <logger name="com.wdg" level="info"/>
     <!-- Spring日志级别控制  -->
-    <logger name="org.springframework" level="warn" />
+    <logger name="org.springframework" level="error"/>
 
-    <logger name="org.apache.ibatis" level="warn" />
+    <logger name="org.apache.ibatis" level="error"/>
 
 </configuration>

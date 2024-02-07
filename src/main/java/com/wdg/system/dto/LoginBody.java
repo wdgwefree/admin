@@ -14,7 +14,7 @@ public class LoginBody {
     private String userAccount;
 
     /**
-     * 用户密码
+     * 用户密码（RSA公钥加密后的密码）
      */
     @NotBlank(message = "password不能为空")
     private String password;
