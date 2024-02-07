@@ -152,7 +152,7 @@ public class TokenService {
     }
 
     /**
-     * 获取当前登录用户信息
+     * 获取请求头中的token获取当前登录用户信息
      * @return
      */
     public LoginTokenDTO getLoginInfo() {

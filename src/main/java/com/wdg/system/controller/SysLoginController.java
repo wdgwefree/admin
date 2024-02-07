@@ -32,8 +32,16 @@ public class SysLoginController extends BaseController {
     /**
      * 注销
      */
-    @GetMapping ("/logout")
+    @GetMapping("/logout")
     public ApiResult logout() {
         return ApiResult.success();
+    }
+
+    /**
+     * 获取当前登录的用户信息
+     */
+    @GetMapping("/getLoginInfo")
+    public ApiResult getLoginInfo() {
+        return ApiResult.success(getLoginTokenDTO());
     }
 }
