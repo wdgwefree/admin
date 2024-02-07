@@ -42,6 +42,7 @@ public class SysLoginService {
         if (sysUser.getStatus().equals("1")) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_DISABLED);
         }
+        sysUser.setPassword(null);
         String token = tokenService.generateToken(sysUser);
         return token;
     }

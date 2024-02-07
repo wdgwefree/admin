@@ -155,6 +155,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- redis使用lettuce依赖commons-pool 这个依赖一定要添加 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+
         <!--aop -->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->
