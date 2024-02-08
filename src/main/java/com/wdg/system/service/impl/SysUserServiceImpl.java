@@ -4,20 +4,31 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wdg.common.constant.MinioConstants;
 import com.wdg.common.constant.StatusConstants;
+import com.wdg.common.dto.result.MinioResult;
 import com.wdg.common.enums.ResultCode;
 import com.wdg.common.exception.BusinessException;
 import com.wdg.system.dto.SysUserDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.mapper.SysUserMapper;
+import com.wdg.system.service.FileService;
 import com.wdg.system.service.ISysUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
+    @Resource
+    private FileService fileService;
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertSysUser(SysUserDTO sysUserDTO) {
         boolean exist = checkUserAccountExist(sysUserDTO.getUserAccount());
         if (exist) {
@@ -27,9 +38,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtil.copyProperties(sysUserDTO, sysUser);
         MultipartFile avatarFile = sysUserDTO.getAvatarFile();
         if (avatarFile != null) {
-
-            sysUser.setAvatar("");
+            MinioResult minioResult = fileService.uploadFile(avatarFile, MinioConstants.SYS_USER_IMAGES_PATH);
+            sysUser.setAvatar(minioResult.getSaveUrl());
         }
+        //目前新增用户时密码采用明文
+        String password= DigestUtils.md5DigestAsHex(sysUserDTO.getPassword().getBytes());
+        sysUser.setPassword(password);
         return save(sysUser);
     }
 

@@ -67,7 +67,7 @@ public class SysUserDTO implements Serializable {
     private MultipartFile avatarFile;
 
     /**
-     * 密码,交互采用MD5加密后字符串
+     * 密码
      */
     @NotBlank(message = "password不能为空", groups = {ValidatedGroup.Insert.class})
     private String password;

@@ -31,7 +31,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/insert")
-    public ApiResult insertSysUser(@Validated({ValidatedGroup.Insert.class}) @RequestBody SysUserDTO sysUserDTO) {
+    public ApiResult insertSysUser(@Validated({ValidatedGroup.Insert.class}) SysUserDTO sysUserDTO) {
         return toApiResult(iSysUserService.insertSysUser(sysUserDTO));
     }
 

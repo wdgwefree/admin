@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 
 @Service
-public class BaseService {
+public class FileService {
 
     @Resource
     private MinioUtil minioUtil;
