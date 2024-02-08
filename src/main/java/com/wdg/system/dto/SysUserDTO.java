@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.wdg.common.utils.ValidatedGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class SysUserDTO implements Serializable {
      * 用户账号
      */
     @NotBlank(message = "userAccount不能为空", groups = {ValidatedGroup.Insert.class})
-    @Length(min = 6, max = 20, message = "用户账号长度在3-20之间")
+    @Length(min = 3, max = 20, message = "用户账号长度在3-20之间")
     private String userAccount;
 
     /**
@@ -61,9 +62,9 @@ public class SysUserDTO implements Serializable {
     private String sex;
 
     /**
-     * 头像路径
+     * 头像文件
      */
-    private String avatar;
+    private MultipartFile avatarFile;
 
     /**
      * 密码,交互采用MD5加密后字符串

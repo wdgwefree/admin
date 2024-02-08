@@ -7,13 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
-/**
- * @description:
- * @author: wdg
- * @create: 2023-12-01 18:33
- */
 @Service
-public class SysFileService {
+public class BaseService {
 
     @Resource
     private MinioUtil minioUtil;

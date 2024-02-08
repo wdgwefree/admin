@@ -1,6 +1,6 @@
 package com.wdg.system.controller;
 
-import com.wdg.system.service.SysFileService;
+import com.wdg.system.service.BaseService;
 import com.wdg.common.constant.FileConstants;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.dto.result.MinioResult;
@@ -23,7 +23,7 @@ import java.util.List;
 public class BaseFileController {
 
     @Resource
-    private SysFileService sysFileService;
+    private BaseService baseService;
 
     @Resource
     private MinioUtil minioUtil;
@@ -35,7 +35,7 @@ public class BaseFileController {
     public ApiResult uploadFile(List<MultipartFile> files) {
         ArrayList<MinioResult> minioResults = new ArrayList<>();
         for (MultipartFile file : files) {
-            MinioResult minioResult = sysFileService.uploadFile(file, FileConstants.USER_IMAGES);
+            MinioResult minioResult = baseService.uploadFile(file, FileConstants.USER_IMAGES);
             minioResults.add(minioResult);
         }
         return ApiResult.success(minioResults);
