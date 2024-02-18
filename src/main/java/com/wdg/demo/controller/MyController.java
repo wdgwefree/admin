@@ -1,43 +1,27 @@
 package com.wdg.demo.controller;
 
-import cn.hutool.core.date.StopWatch;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
-import com.wdg.demo.dto.ParamVO;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import com.wdg.demo.service.UserRegisterEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * @description: test
- * @author: wdg
- * @create: 2023-11-22 14:34
- */
-@RequestMapping("/wdg")
+@RequestMapping("/demo")
 @RestController
 public class MyController {
 
-    @PostMapping("/test1")
-    public ApiResult test1(@Validated @RequestBody ParamVO paramVO) {
-        StopWatch stopWatch = new StopWatch();
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
-        return ApiResult.success("123456");
 
-    }
-
-    @GetMapping("/test2")
+    @GetMapping("/test")
     @OpenAPI
-    public ApiResult test2() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "wdg");
-        map.put("pwd", "123456");
-        map.put("randomId", IdUtil.getSnowflakeNextIdStr());
-        String token = JWTUtil.createToken(map, "temp".getBytes());
-        return ApiResult.success(token);
+    public ApiResult test() {
+        applicationEventPublisher.publishEvent(new UserRegisterEvent(this));
+        return ApiResult.success();
     }
 
 }

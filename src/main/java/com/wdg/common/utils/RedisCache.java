@@ -1,11 +1,9 @@
 package com.wdg.common.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -245,6 +243,7 @@ public final class RedisCache {
 
     /**
      * 连通性测试
+     *
      * @return 成功返回"PONG"
      */
     public String ping() {
@@ -253,4 +252,26 @@ public final class RedisCache {
     }
 
 
+    /**
+     * 发布消息到指定的频道
+     *
+     * @param channel 频道名称
+     * @param message 消息内容
+     */
+    public void publishMessage(String channel, Object message) {
+        redisTemplate.convertAndSend(channel, message);
+    }
+
+    /**
+     * 订阅指定的频道
+     *
+     * @param listener 消息监听器
+     * @param channel  频道名称
+     */
+    public void subscribeChannel(MessageListener listener, String channel) {
+        redisTemplate.execute((RedisCallback<Void>) connection -> {
+            connection.subscribe(listener, channel.getBytes());
+            return null;
+        });
+    }
 }

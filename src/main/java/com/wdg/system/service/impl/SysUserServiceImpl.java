@@ -39,7 +39,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         MultipartFile avatarFile = sysUserDTO.getAvatarFile();
         if (avatarFile != null) {
             MinioResult minioResult = fileService.uploadFile(avatarFile, MinioConstants.SYS_USER_IMAGES_PATH);
-            sysUser.setAvatar(minioResult.getSaveUrl());
+            sysUser.setAvatar(minioResult.getAccessUrl());
         }
         //目前新增用户时密码采用明文
         String password= DigestUtils.md5DigestAsHex(sysUserDTO.getPassword().getBytes());
