@@ -1,4 +1,4 @@
-package com.wdg.common.login;
+package com.wdg.demo.login;
 
 /**
  * 抽象策略接口

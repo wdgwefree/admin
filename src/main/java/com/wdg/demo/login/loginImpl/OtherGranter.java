@@ -1,7 +1,7 @@
-package com.wdg.common.login.loginImpl;
+package com.wdg.demo.login.loginImpl;
 
 import com.wdg.common.constant.LoginConstants;
-import com.wdg.common.login.UserGranter;
+import com.wdg.demo.login.UserGranter;
 import org.springframework.stereotype.Component;
 
 /**
