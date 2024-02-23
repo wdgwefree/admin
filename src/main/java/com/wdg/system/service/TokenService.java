@@ -87,7 +87,7 @@ public class TokenService {
      */
     public boolean verifyToken(HttpServletResponse response, String token) {
         if (StrUtil.isEmpty(token)) {
-            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token不存在"));
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_NOT_FOUND));
             MyServletUtil.renderString(response, str);
             return false;
         }
@@ -95,12 +95,12 @@ public class TokenService {
         try {
             verify = JWTUtil.verify(token, secret.getBytes());
         } catch (Exception e) {
-            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token错误"));
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_ERROR));
             MyServletUtil.renderString(response, str);
             return false;
         }
         if (!verify) {
-            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token是无效的"));
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_INVALID));
             MyServletUtil.renderString(response, str);
             return false;
         }
@@ -109,7 +109,7 @@ public class TokenService {
         LoginTokenDTO loginTokenDTO = redisCache.getCacheObject(getRedisKey(tokenKey));
 
         if (loginTokenDTO == null) {
-            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token已过期"));
+            String str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXPIRED));
             MyServletUtil.renderString(response, str);
             return false;
         }
@@ -146,7 +146,7 @@ public class TokenService {
             redisCache.deleteObject(getRedisKey(tokenKey));
             str = JSONUtil.toJsonStr(ApiResult.success("退出成功"));
         } catch (Exception e) {
-            str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION.getCode(), "token是无效的"));
+            str = JSONUtil.toJsonStr(new ApiResult(ResultCode.TOKEN_EXCEPTION));
         }
         MyServletUtil.renderString(response, str);
     }

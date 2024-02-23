@@ -41,7 +41,7 @@ public class ApiResult implements Serializable {
         this.data = data;
     }
 
-    private ApiResult(ResultCode resultCode) {
+    public ApiResult(ResultCode resultCode) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
     }
