@@ -15,11 +15,11 @@ public class LogAspect {
 
 
     //定义切点表达式
-    @Pointcut("@annotation(com.wdg.common.annotation.LogInOut)")
-    public void LogInOut() {
+    @Pointcut("@annotation(com.wdg.common.annotation.InOutLog)")
+    public void InOutLog() {
     }
 
-    @AfterReturning(pointcut = "LogInOut()", returning = "result")
+    @AfterReturning(pointcut = "InOutLog()", returning = "result")
     public void logMethodExit(JoinPoint joinPoint, Object result) {
         StringBuffer infoStr = new StringBuffer();
 
@@ -32,7 +32,7 @@ public class LogAspect {
         log.info(infoStr.toString());
     }
 
-    @AfterThrowing(pointcut = "LogInOut()", throwing = "e")
+    @AfterThrowing(pointcut = "InOutLog()", throwing = "e")
     public void logMethodException(JoinPoint joinPoint, Throwable e) {
         StringBuffer str = new StringBuffer();
 
