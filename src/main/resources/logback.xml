@@ -62,10 +62,34 @@
         </filter>
     </appender>
 
+    <!-- 系统debug日志输出 -->
+    <appender name="debug_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/debug.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${logPath}/debug.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>DEBUG</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
     <!--root日志配置，是logger的顶级父级别，用于设置默认的日志级别-->
     <root level="info">
         <appender-ref ref="info_file"/>
         <appender-ref ref="error_file"/>
+        <appender-ref ref="debug_file"/>
         <appender-ref ref="console"/>
     </root>
 

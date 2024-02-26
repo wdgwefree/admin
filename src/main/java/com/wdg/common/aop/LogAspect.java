@@ -40,7 +40,7 @@ public class LogAspect {
         for (Object arg : joinPoint.getArgs()) {
             argStr.append(arg.toString() + "  ");
         }
-        str.append("方法: " + joinPoint.getSignature().toShortString() + argStr + " 异常: " + e.getMessage());
+        str.append("方法: " + joinPoint.getSignature().toShortString() + argStr + " 异常: " + e.toString());
         log.error(str.toString());
     }
 

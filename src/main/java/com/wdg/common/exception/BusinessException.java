@@ -30,4 +30,12 @@ public class BusinessException extends RuntimeException {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
     }
+
+    @Override
+    public String toString() {
+        return "BusinessException{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }
