@@ -4,18 +4,17 @@
     <!-- 日志存放路径 -->
     <property name="logPath" value="D:/Logs/wdgAdmin/"/>
 
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
     <!-- 日志输出格式 -->
     <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
     <!--<property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />-->
     <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n"/>
 
-    <property name="consolePattern"
-              value="%(%date{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %([%thread]) %boldMagenta(%logger{50}) %cyan(%msg%n)"/>
-
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${consolePattern}</pattern>
+            <pattern>${logPattern}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
