@@ -9,10 +9,13 @@
     <!--<property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />-->
     <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n"/>
 
+    <property name="consolePattern"
+              value="%(%date{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %([%thread]) %boldMagenta(%logger{50}) %cyan(%msg%n)"/>
+
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${logPattern}</pattern>
+            <pattern>${consolePattern}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>

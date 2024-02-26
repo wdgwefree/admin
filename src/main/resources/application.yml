@@ -1,8 +1,8 @@
 server:
-  name: wdgAdmin
+  name: admin
   port: 8188
   servlet:
-    context-path: /wdgAdmin
+    context-path: /admin
 
 spring:
   resources:

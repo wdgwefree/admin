@@ -25,7 +25,7 @@ public class GenerateCode {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "D://generator")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("sys_dept") // 设置需要生成的表名
+                    builder.addInclude("auth_log") // 设置需要生成的表名
                             .addTablePrefix("app_", "c_") // 设置过滤表前缀
                             .entityBuilder()  //开启Entity 策略配置
                             .enableLombok() //开启 lombok
