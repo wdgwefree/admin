@@ -19,6 +19,9 @@ public class LogAspect {
     public void InOutLog() {
     }
 
+    /**
+     * 处理完请求后执行
+     */
     @AfterReturning(pointcut = "InOutLog()", returning = "result")
     public void logMethodExit(JoinPoint joinPoint, Object result) {
         StringBuffer infoStr = new StringBuffer();
@@ -32,6 +35,9 @@ public class LogAspect {
         log.info(infoStr.toString());
     }
 
+    /**
+     * 拦截异常操作
+     */
     @AfterThrowing(pointcut = "InOutLog()", throwing = "e")
     public void logMethodException(JoinPoint joinPoint, Throwable e) {
         StringBuffer str = new StringBuffer();

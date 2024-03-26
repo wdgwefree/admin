@@ -15,7 +15,7 @@ public class BusinessException extends RuntimeException {
 
     //用于指定错误信息
     public BusinessException(String msg) {
-        super(msg);
+        this.code = ResultCode.ERROR.getCode();
         this.msg = msg;
     }
 
