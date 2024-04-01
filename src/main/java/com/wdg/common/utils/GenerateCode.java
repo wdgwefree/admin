@@ -13,7 +13,7 @@ public class GenerateCode {
 
     public static void main(String[] args) {
 
-        FastAutoGenerator.create("jdbc:mysql://localhost:3306/wdg?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8", "root", "mysql1234")
+        FastAutoGenerator.create("jdbc:mysql://81.70.190.102:50307/wdg?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8", "root", "TXroot123.")
                 .globalConfig(builder -> {
                     builder.author("wdg") // 设置作者
                             //.enableSwagger() // 开启 swagger 模式
@@ -25,7 +25,7 @@ public class GenerateCode {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "D://generator")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("app_business") // 设置需要生成的表名
+                    builder.addInclude("sys_menu") // 设置需要生成的表名
                             //.addTablePrefix("app_", "c_") // 设置过滤表前缀
                             .entityBuilder()  //开启Entity 策略配置
                             .enableLombok() //开启 lombok
