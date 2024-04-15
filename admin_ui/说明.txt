@@ -1,0 +1,84 @@
+
+后台前端解决方案
+    用于构建管理端、后台管理系统或者面向管理用户的前端应用程序的技术栈、框架和工具的综合解决方案。
+
+1.已登录后无法跳转到登录页,只有注销登录后方能跳转到login页面（保证安全）
+2.采用Cookie的方式存储token
+3.记住密码、登录接口网络传输密码，密码都是RSA公钥加密后的数据,然后后端私钥解密，进行MD5加密存储
+
+1.前端来控制页面级的权限
+
+
+2024.2.6:引入状态管理 pinia
+
+
+
+
+
+token有自动续期功能，如何保证token的安全性（token被劫持）
+
+动态刷新token
+限制 Token 的使用范围：在签发 Token 时，可以限制 Token 的使用范围，例如限制只能在特定的 IP 地址或设备上使用。
+
+
+技术	描述	官网
+Vue3	渐进式 JavaScript 框架	https://cn.vuejs.org/
+Element Plus	基于 Vue 3，面向设计师和开发者的组件库	https://element-plus.gitee.io/zh-CN/
+Vite	前端开发与构建工具	https://cn.vitejs.dev/
+TypeScript	微软新推出的一种语言，是 JavaScript 的超集	https://www.tslang.cn/
+Pinia	新一代状态管理工具	https://pinia.vuejs.org/zh/
+Axios	HTTP网络请求	https://axios-http.com/
+Vue Router	Vue.js 的官方路由	https://router.vuejs.org/zh/
+Echarts	一个基于 JavaScript 的开源可视化图表库	https://echarts.apache.org/zh/
+vue-i18n	Vue 国际化多语言插件	https://vue-i18n.intlify.dev/
+VueUse	基于Vue组合式API的实用工具集	http://www.vueusejs.com/
+wangEditor	Typescript 开发的 Web 富文本编辑器	https://www.wangeditor.com/
+UnoCSS	一个具有高性能且极具灵活性的即时原子化 CSS 引擎	https://unocss.dev/
+
+
+
+
+
+
+
+1.用户登录--->得到token---->
+
+1.用户登录成功---->获取当前用户权限接口(菜单)
+
+
+
+
+
+
+request.js
+前后端对接，状态码0表示成功
+通过全局配置，接口非0的情况下，弹窗提示msg
+并把接口返回的数据全部返回交给调用处单独处理
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
