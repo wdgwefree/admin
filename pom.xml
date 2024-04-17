@@ -12,7 +12,7 @@
     <groupId>com.wdg</groupId>
     <artifactId>admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wdgAdmin</name>
+    <name>admin</name>
     <description>Admin 通用后台管理系统</description>
 
     <properties>
