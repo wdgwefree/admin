@@ -1,5 +1,3 @@
-import {fileURLToPath, URL} from 'node:url'
-
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 // 导入path 用于设置别名

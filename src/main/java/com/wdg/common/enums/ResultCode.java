@@ -28,9 +28,7 @@ public enum ResultCode {
     USER_ACCOUNT_EXIST(10204, "用户账号已存在"),
     USER_ACCOUNT_NOT_EXIST(10205, "用户账号不存在"),
     USER_ACCOUNT_DISABLED(10206, "用户账号已禁用"),
-
-    EXCEPTION(10101110, "222");
-
+    ;
 
     private Integer code;
 
