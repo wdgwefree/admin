@@ -1,27 +1,17 @@
 package com.wdg.common.Interceptor;
 
 import com.wdg.common.annotation.OpenAPI;
-import com.wdg.system.service.TokenService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
-
-    // 令牌自定义标识
-    @Value("${token.header}")
-    private String header;
-
-    @Resource
-    private TokenService tokenService;
-
+    
     /**
      * 在请求进入到Controller前进行拦截，有返回值。（返回true则将请求放行进入下一个拦截器，false则请求结束返回错误信息）
      */
