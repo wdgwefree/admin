@@ -1,5 +1,7 @@
 package com.wdg.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -21,16 +23,19 @@ public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
     /**
      * 角色ID
      */
-    @TableId("role_id")
+    @TableField("role_id")
     private Long roleId;
 
     /**
      * 菜单ID
      */
-    @TableId("menu_id")
+    @TableField("menu_id")
     private Long menuId;
 
 
