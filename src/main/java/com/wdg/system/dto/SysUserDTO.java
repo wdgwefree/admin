@@ -4,6 +4,7 @@ package com.wdg.system.dto;
 import com.wdg.common.utils.ValidatedGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -58,7 +59,7 @@ public class SysUserDTO implements Serializable {
     /**
      * 头像路径
      */
-    private String avatar;
+    private MultipartFile avatarFile;
 
     /**
      * 密码

@@ -33,6 +33,7 @@ public class ApiResult implements Serializable {
     private ApiResult() {
         this.code = ResultCode.SUCCESS.getCode();
         this.msg = ResultCode.SUCCESS.getMsg();
+        this.data = null;
     }
 
     private ApiResult(Object data) {
@@ -44,16 +45,18 @@ public class ApiResult implements Serializable {
     public ApiResult(ResultCode resultCode) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
+        this.data = null;
     }
 
     public ApiResult(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+        this.data = null;
     }
 
 
     /**
-     * 通用返回成功（没有返回结果,即data为null）
+     * 通用返回成功
      *
      * @return
      */
@@ -63,7 +66,7 @@ public class ApiResult implements Serializable {
 
 
     /**
-     * 通用返回成功（有反回结果）
+     * 通用返回成功
      *
      * @param data
      * @return
@@ -76,11 +79,10 @@ public class ApiResult implements Serializable {
     /**
      * 通用返回失败
      *
-     * @param
      * @return
      */
     public static ApiResult error() {
-        return new ApiResult(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
+        return new ApiResult(ResultCode.ERROR);
     }
 
 
@@ -98,38 +100,44 @@ public class ApiResult implements Serializable {
     /**
      * 异常返回
      *
-     * @param msg
+     * @param resultCode
      * @return
      */
-    public static ApiResult exception(String msg) {
-        return new ApiResult(ResultCode.EXCEPTION_ERROR.getCode(), msg);
-    }
-
     public static ApiResult exception(ResultCode resultCode) {
         return new ApiResult(resultCode);
     }
 
+
+    /**
+     * 异常返回
+     *
+     * @param code
+     * @param msg
+     * @return
+     */
     public static ApiResult exception(Integer code, String msg) {
         return new ApiResult(code, msg);
     }
 
-    /**
-     * 自定义业务异常返回
-     *
-     * @param msg
-     * @return
-     */
-    public static ApiResult businessException(String msg) {
-        return new ApiResult(ResultCode.BUSINESS_EXCEPTION.getCode(), msg);
-    }
 
     /**
-     * 参数异常返回
+     * 异常返回
      *
      * @param msg
      * @return
      */
-    public static ApiResult argumentException(String msg) {
+    public static ApiResult exception(String msg) {
+        return new ApiResult(ResultCode.ERROR.getCode(), msg);
+    }
+
+
+    /**
+     * 参数异常
+     *
+     * @param msg
+     * @return
+     */
+    public static ApiResult paramsException(String msg) {
         return new ApiResult(ResultCode.ARGUMENT_EXCEPTION.getCode(), msg);
     }
 }

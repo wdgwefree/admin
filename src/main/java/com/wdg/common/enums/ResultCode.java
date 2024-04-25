@@ -3,12 +3,9 @@ package com.wdg.common.enums;
 public enum ResultCode {
 
     SUCCESS(0, "操作成功"),
-    ERROR(10000, "操作失败"),
+    ERROR(1000, "操作失败"),
 
-
-    EXCEPTION_ERROR(10001, "运行时异常"),
-    BUSINESS_EXCEPTION(10002, "自定义业务异常"),
-    ARGUMENT_EXCEPTION(10003, "请求参数异常"),
+    ARGUMENT_EXCEPTION(10001, "请求参数异常"),
 
     //token相关异常
     TOKEN_EXCEPTION(10101,"token异常"),

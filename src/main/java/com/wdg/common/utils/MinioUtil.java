@@ -146,5 +146,13 @@ public class MinioUtil {
         return fullPath;
     }
 
+    /**
+     * 根据保存路径获取访问路径
+     * @param savePath 保存路径
+     * @return  URL访问路径
+     */
+    public String getAccessUrl(String savePath) {
+        return endpoint + "/" + bucketName + savePath;
+    }
 
 }

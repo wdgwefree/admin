@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 处理手动抛出的的业务异常
+     * 处理业务异常
      */
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
         HttpServletRequest request = MyServletUtil.getRequest();
         String servletPath = request.getServletPath();
-        log.error("请求 "+servletPath+" : [code：{" + e.getCode() + "}，msg：{" + e.getMsg() + "}]");
+        log.error("请求 " + servletPath + " : [code：{" + e.getCode() + "}，msg：{" + e.getMsg() + "}]");
         return ApiResult.exception(e.getCode(), e.getMsg());
     }
 
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
         } else if (e instanceof MissingServletRequestParameterException) {
             log.error("参数异常[MissingServletRequestParameterException]：" + e.getMessage());
             return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), getExceptionMsg(e));
-        }else{
+        } else {
             log.error("异常[Exception]：" + e.getMessage());
             return ApiResult.exception(getExceptionMsg(e));
         }
