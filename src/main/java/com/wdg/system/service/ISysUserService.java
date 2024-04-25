@@ -1,5 +1,6 @@
 package com.wdg.system.service;
 
+import com.wdg.system.dto.SysUserDTO;
 import com.wdg.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-04-22
  */
 public interface ISysUserService extends IService<SysUser> {
+
+    public void add(SysUserDTO sysUserDTO);
 
 }
