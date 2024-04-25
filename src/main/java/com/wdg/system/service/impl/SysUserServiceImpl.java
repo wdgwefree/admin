@@ -14,6 +14,7 @@ import com.wdg.system.entity.SysUser;
 import com.wdg.system.mapper.SysUserMapper;
 import com.wdg.system.service.ISysUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private FileService fileService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(SysUserDTO sysUserDTO) {
         boolean exist = this.checkUserAccountExist(sysUserDTO.getUserAccount());
         if (exist) {
