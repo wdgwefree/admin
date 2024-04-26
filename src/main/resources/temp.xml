@@ -10,11 +10,9 @@
     <property name="console_pattern" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <!--文件日志格式-->
     <property name="file_pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n"/>
-    <!-- 日志存放路径 -->
-    <property name="log_path" value="./adminLogs/"/>
-    <!-- 日志文件保留天数 -->
-    <property name="log_max_history" value="30"/>
 
+    <!-- 日志存放路径 -->
+    <property name="logPath" value="./logs/"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -26,18 +24,16 @@
 
     <!-- 系统info日志输出 -->
     <appender name="info_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log_path}/info.log</file>
+        <file>${logPath}/info.log</file>
         <!--每个文件限制 50MB,每日滚动，最多30个文件，归档文件限制5G-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 历史日志输出文件名 -->
-            <fileNamePattern>${log_path}/info.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>${logPath}/info.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
-            <maxHistory>${log_max_history}</maxHistory>
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${file_pattern}</pattern>
+            <pattern>${logPattern}</pattern>
         </encoder>
-        <!--过滤器-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->
             <level>INFO</level>
@@ -48,29 +44,18 @@
         </filter>
     </appender>
 
-    <!-- 异步处理info日志 -->
-    <appender name="async_info" class="ch.qos.logback.classic.AsyncAppender">
-        <!-- 默认如果队列的80%已满，将丢弃TRACE、DEBUG、INFO日志，只保留WARN和ERROR日志。为了保留全部日志，设置为0 -->
-        <discardingThreshold>0</discardingThreshold>
-        <!-- 更改默认的队列的深度，该值会影响性能，默认值为256 -->
-        <queueSize>512</queueSize>
-        <!-- 添加附加的appender，最多只能添加一个 -->
-        <appender-ref ref="INFO_FILE"/>
-        <includeCallerData>true</includeCallerData>
-    </appender>
-
     <!-- 系统error日志输出 -->
     <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log_path}/error.log</file>
+        <file>${logPath}/error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log_path}/error.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>${logPath}/error.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
-            <maxHistory>${log_max_history}</maxHistory>
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${file_pattern}</pattern>
+            <pattern>${logPattern}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->
@@ -84,16 +69,16 @@
 
     <!-- 系统debug日志输出 -->
     <appender name="debug_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log_path}/debug.log</file>
+        <file>${logPath}/debug.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log_path}/debug.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>${logPath}/debug.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <!-- 每天创建一个新的日志文件，旧的日志文件被压缩 -->
-            <maxHistory>${log_max_history}</maxHistory>
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${file_pattern}</pattern>
+            <pattern>${logPattern}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->

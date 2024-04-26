@@ -26,6 +26,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public ApiResult handleException(BusinessException e) {
+        e.printStackTrace();
         HttpServletRequest request = MyServletUtil.getRequest();
         String servletPath = request.getServletPath();
         log.error("请求 " + servletPath + " : [code：{" + e.getCode() + "}，msg：{" + e.getMsg() + "}]");
@@ -37,6 +38,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ApiResult handleException(Exception e) {
+        e.printStackTrace();
         //处理参数异常
         // (嵌套对象字段缺失、校验不通过会走这里)
         if (e instanceof MethodArgumentNotValidException) {
