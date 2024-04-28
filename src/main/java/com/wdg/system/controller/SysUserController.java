@@ -30,9 +30,20 @@ public class SysUserController extends BaseController {
         return ApiResult.success();
     }
 
+    /**
+     * 删除用户
+     * @param userId
+     * @return
+     */
     @GetMapping("/deleteById")
     public ApiResult delete(@RequestParam("userId") Long userId) {
-        iSysUserService.removeById(userId);
+        iSysUserService.deleteById(userId);
+        return ApiResult.success();
+    }
+
+    @PostMapping("/update")
+    public ApiResult update(@RequestBody @Validated({ValidatedGroup.Update.class}) SysUserDTO sysUserDTO) {
+        iSysUserService.updateSysUser(sysUserDTO);
         return ApiResult.success();
     }
 

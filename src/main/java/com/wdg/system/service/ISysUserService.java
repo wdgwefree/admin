@@ -15,4 +15,5 @@ public interface ISysUserService extends IService<SysUser> {
 
     void deleteById(Long userId);
 
+    void updateSysUser(SysUserDTO sysUserDTO);
 }

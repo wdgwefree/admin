@@ -168,6 +168,7 @@
             <version>1.37.0</version>
         </dependency>
 
+        <!--生成表结构文档-->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
             <artifactId>screw-core</artifactId>

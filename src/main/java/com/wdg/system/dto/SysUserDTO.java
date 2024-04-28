@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -16,7 +17,7 @@ public class SysUserDTO implements Serializable {
     /**
      * 用户ID
      */
-    @NotBlank(message = "userId不能为空", groups = {ValidatedGroup.Update.class})
+    @NotNull(message = "userId不能为空", groups = {ValidatedGroup.Update.class})
     private Long userId;
 
     /**
@@ -65,7 +66,6 @@ public class SysUserDTO implements Serializable {
      * 密码
      */
     @NotBlank(message = "password不能为空", groups = {ValidatedGroup.Insert.class})
-    @Length(min = 6, max = 32, message = "密码长度在6-20之间",groups = {ValidatedGroup.Insert.class})
     private String password;
 
     /**

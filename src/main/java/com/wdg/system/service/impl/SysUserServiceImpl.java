@@ -60,15 +60,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void deleteById(Long userId) {
-        SysUser user = getById(userId);
-        if (user == null) {
+        SysUser sysUser = getOne(new LambdaQueryWrapper<SysUser>().select(SysUser::getUserId, SysUser::getStatus));
+        if (sysUser == null) {
             throw new BusinessException(ResultCode.USER_NOT_FOUND);
         }
-        if (StatusConstants.NOT_EXIST.equals(user.getStatus())) {
+        if (StatusConstants.NOT_EXIST.equals(sysUser.getStatus())) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_AlREADY_EXIST);
         }
-        user.setStatus(StatusConstants.NOT_EXIST);
-        updateById(user);
+        sysUser.setStatus(StatusConstants.NOT_EXIST);
+        updateById(sysUser);
+    }
+
+    @Override
+    public void updateSysUser(SysUserDTO sysUserDTO) {
+        SysUser oldUser = getById(sysUserDTO.getUserId());
+        if (oldUser == null) {
+            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+        }
+        //用户账号如果修改了，需要判断用户账号是否已经存在
+        if (!oldUser.getUserAccount().equals(sysUserDTO.getUserAccount())) {
+            boolean exist = checkUserAccountExist(sysUserDTO.getUserAccount());
+            if (exist) {
+                throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST);
+            }
+        }
+        SysUser newUser = new SysUser();
+        BeanUtil.copyProperties(sysUserDTO, newUser);
+        updateById(newUser);
     }
 
 
