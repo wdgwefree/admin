@@ -28,7 +28,7 @@ public class SysUserDTO implements Serializable {
      * 登录账号
      */
     @NotBlank(message = "userAccount不能为空", groups = {ValidatedGroup.Insert.class})
-    @Length(min = 6, max = 20, message = "用户账号长度在3-20之间", groups = {ValidatedGroup.Insert.class})
+    @Length(min = 3, max = 20, message = "用户账号长度在3-20之间", groups = {ValidatedGroup.Insert.class})
     private String userAccount;
 
     /**

@@ -20,11 +20,9 @@ public class SysUserController extends BaseController {
     @Autowired
     private ISysUserService iSysUserService;
 
+
     /**
      * 新增用户
-     *
-     * @param sysUserDTO
-     * @return
      */
     @PostMapping("/add")
     public ApiResult add(@RequestBody @Validated({ValidatedGroup.Insert.class}) SysUserDTO sysUserDTO) {
@@ -32,6 +30,16 @@ public class SysUserController extends BaseController {
         return ApiResult.success();
     }
 
+    @GetMapping("/deleteById")
+    public ApiResult delete(@RequestParam("userId") Long userId) {
+        iSysUserService.removeById(userId);
+        return ApiResult.success();
+    }
+
+
+    /**
+     * 分页查询用户
+     */
     @PostMapping("/pageSelect")
     public ApiResult pageSelect() {
         startPage();

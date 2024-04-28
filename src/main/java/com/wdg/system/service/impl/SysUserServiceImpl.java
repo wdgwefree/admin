@@ -55,7 +55,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String password = DigestUtils.md5DigestAsHex(sysUserDTO.getPassword().getBytes());
         sysUser.setPassword(password);
         save(sysUser);
-        log.info("新增用户:"+sysUser.getUserAccount()+"成功");
+        log.info("新增用户:"+sysUser.getUserAccount());
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        SysUser user = getById(userId);
+        if (user == null) {
+            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+        }
+        if (StatusConstants.NOT_EXIST.equals(user.getStatus())) {
+            throw new BusinessException(ResultCode.USER_ACCOUNT_AlREADY_EXIST);
+        }
+        user.setStatus(StatusConstants.NOT_EXIST);
+        updateById(user);
     }
 
 

@@ -24,6 +24,7 @@ public enum ResultCode {
     USER_ACCOUNT_ERROR(10203, "用户账号错误"),
     USER_ACCOUNT_EXIST(10204, "用户账号已存在"),
     USER_ACCOUNT_NOT_EXIST(10205, "用户账号不存在"),
+    USER_ACCOUNT_AlREADY_EXIST(10205, "用户账号已被删除"),
     USER_ACCOUNT_DISABLED(10206, "用户账号已禁用"),
     ;
 
