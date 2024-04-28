@@ -30,7 +30,6 @@ public class PageUtil {
                     return;
                 }
             }
-            throw new BusinessException(ResultCode.ARGUMENT_EXCEPTION.getCode(), "分页参数异常");
         } catch (Exception e) {
             throw new BusinessException(ResultCode.ARGUMENT_EXCEPTION.getCode(), "分页参数异常");
         }
