@@ -30,6 +30,11 @@ public class BusinessException extends RuntimeException {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
     }
+    //用于指定错误信息
+    public BusinessException(ResultCode resultCode,String info) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg()+"("+info+")";
+    }
 
     @Override
     public String toString() {

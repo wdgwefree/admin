@@ -1,3 +1,94 @@
 # 正式环境
 app:
   environment: prod
+
+spring:
+  #数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://81.70.190.102:50307/admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    username: root
+    password: TXroot123.
+
+    # 连接池配置
+    druid:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 5
+      # 最大连接池数量
+      maxActive: 20
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      keepAlive: true
+      testWhileIdle: true
+
+      #监控统计信息
+      webStatFilter:
+        enabled: true
+      # Druid监控配置
+      statViewServlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: 123456
+
+      # 慢SQL监控
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        # sql防火墙
+        wall:
+          config:
+            #允许一次执行多条 SQL 语句，即一个语句包含多个;
+            multi-statement-allow: false
+
+  #redis配置
+  redis:
+    database: 6 # 数据库索引 默认为0
+    host: 81.70.190.102    # redis服务器地址
+    port: 6973    # 端口号
+    password: redis1234    # 密码（默认为空）
+    timeout: 3000 # 连接超时时间（毫秒）
+    lettuce:
+      pool: # 连接池配置
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+
+#minio配置
+minio:
+  endpoint: http://81.70.190.102:9002
+  accessKey: minio
+  secretKey: minio1234
+  bucketName: wdg-admin
+
+
+mybatis-plus:
+  # 指定包别名
+  typeAliasesPackage: com.wdg.**.entity
+  # mapper.xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",NONE，不设置，等同于INPUT；ASSIGN_ID，只有当用户未输入时，采用雪花算法生成一个适用于分布式环境的全局唯一主键，类型可以是String和number
+      id-type: ASSIGN_ID
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: MYSQL
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+
+# 日志文件配置
+log:
+  path: D:\wdgAdmin\temp\

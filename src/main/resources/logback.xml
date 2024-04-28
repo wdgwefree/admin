@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- TRACE < DEBUG < INFO < WARN < ERROR-->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
-    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
     <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
     <!-- 彩色日志格式 -->
-    <property name="console_pattern" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="console_pattern"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <!--文件日志格式-->
     <property name="file_pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n"/>
     <!-- 日志存放路径 -->
@@ -55,7 +58,7 @@
         <!-- 更改默认的队列的深度，该值会影响性能，默认值为256 -->
         <queueSize>512</queueSize>
         <!-- 添加附加的appender，最多只能添加一个 -->
-        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="info_file"/>
         <includeCallerData>true</includeCallerData>
     </appender>
 
@@ -82,6 +85,17 @@
         </filter>
     </appender>
 
+    <!-- 异步处理error日志 -->
+    <appender name="async_error" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 默认如果队列的80%已满，将丢弃TRACE、DEBUG、INFO日志，只保留WARN和ERROR日志。为了保留全部日志，设置为0 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度，该值会影响性能，默认值为256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender，最多只能添加一个 -->
+        <appender-ref ref="error_file"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
     <!-- 系统debug日志输出 -->
     <appender name="debug_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log_path}/debug.log</file>
@@ -105,16 +119,27 @@
         </filter>
     </appender>
 
+    <!-- 异步处理debug日志 -->
+    <appender name="async_debug" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 默认如果队列的80%已满，将丢弃TRACE、DEBUG、INFO日志，只保留WARN和ERROR日志。为了保留全部日志，设置为0 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度，该值会影响性能，默认值为256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender，最多只能添加一个 -->
+        <appender-ref ref="debug_file"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
     <!--root日志配置，是logger的顶级父级别，用于设置默认的日志级别-->
     <root level="info">
-        <appender-ref ref="info_file"/>
-        <appender-ref ref="error_file"/>
-        <appender-ref ref="debug_file"/>
         <appender-ref ref="console"/>
+        <appender-ref ref="async_info"/>
+        <appender-ref ref="async_error"/>
+        <appender-ref ref="async_debug"/>
     </root>
 
     <!-- 系统模块日志级别控制  -->
-    <logger name="com.wdg" level="info"/>
+    <!--<logger name="com.wdg" level="info"/>-->
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn"/>
     <!-- ibatis日志级别控制  -->

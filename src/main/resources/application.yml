@@ -6,7 +6,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: prod
   servlet:
     # 文件上传
     multipart:

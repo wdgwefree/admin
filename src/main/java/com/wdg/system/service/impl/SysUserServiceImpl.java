@@ -13,6 +13,7 @@ import com.wdg.system.dto.SysUserDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.mapper.SysUserMapper;
 import com.wdg.system.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -25,6 +26,7 @@ import javax.annotation.Resource;
  * 用户信息表 服务实现类
  * </p>
  */
+@Slf4j
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
@@ -36,7 +38,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void add(SysUserDTO sysUserDTO) {
         boolean exist = this.checkUserAccountExist(sysUserDTO.getUserAccount());
         if (exist) {
-            throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST);
+            throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST,sysUserDTO.getUserAccount());
         }
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserDTO, sysUser);
@@ -52,8 +54,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //目前新增用户时密码采用明文
         String password = DigestUtils.md5DigestAsHex(sysUserDTO.getPassword().getBytes());
         sysUser.setPassword(password);
-
         save(sysUser);
+        log.info("新增用户:"+sysUser.getUserAccount()+"成功");
     }
 
 
