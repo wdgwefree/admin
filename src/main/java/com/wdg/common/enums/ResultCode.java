@@ -5,7 +5,8 @@ public enum ResultCode {
     SUCCESS(0, "操作成功"),
     ERROR(1000, "操作失败"),
 
-    ARGUMENT_EXCEPTION(10001, "请求参数异常"),
+    NOT_LOGIN(10001, "未登录禁止访问"),
+    ARGUMENT_EXCEPTION(10011, "请求参数异常"),
 
     //token相关异常
     TOKEN_EXCEPTION(10101,"token异常"),

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 全局异常处理器，专门用于处理 REST API 的异常情况
- * 但是：处理不了拦截器里的异常!!!
  */
 @Slf4j
 @RestControllerAdvice
