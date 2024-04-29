@@ -30,8 +30,9 @@ public class TokenInterceptor implements HandlerInterceptor {
         //有注解@OpenAPI标注的方法，直接通过
         if (openAPI != null) {
             return true;
+        }else{
+            return false;
         }
-        return true;
 
         //String token = request.getHeader(header);//获取请求头中的令牌
         //

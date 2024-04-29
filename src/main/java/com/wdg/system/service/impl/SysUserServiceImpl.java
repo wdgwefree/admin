@@ -13,6 +13,7 @@ import com.wdg.system.dto.SysUserDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.mapper.SysUserMapper;
 import com.wdg.system.service.ISysUserService;
+import com.wdg.system.utils.saltUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
@@ -51,8 +53,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUser.setAvatar(minioResult.getSaveUrl());
         }
 
-        //目前新增用户时密码采用明文
-        String password = DigestUtils.md5DigestAsHex(sysUserDTO.getPassword().getBytes());
+        //目前新增用户时密码采用明文传输
+        String salt = saltUtil.getSalt();
+        String password = DigestUtils.md5DigestAsHex((sysUserDTO.getPassword()+salt).getBytes(StandardCharsets.UTF_8));
+        sysUser.setSalt(salt);
         sysUser.setPassword(password);
         save(sysUser);
         log.info("新增用户:"+sysUser.getUserAccount());
