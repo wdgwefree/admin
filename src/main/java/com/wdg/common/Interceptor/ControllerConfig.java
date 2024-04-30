@@ -1,6 +1,7 @@
 package com.wdg.common.Interceptor;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -34,7 +35,7 @@ public class ControllerConfig implements WebMvcConfigurer {
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外
 
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
-        registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin())).addPathPatterns("/**").excludePathPatterns("/login");
     }
 
     @Override

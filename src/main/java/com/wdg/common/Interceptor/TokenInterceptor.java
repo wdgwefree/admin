@@ -1,8 +1,6 @@
 package com.wdg.common.Interceptor;
 
 import com.wdg.common.annotation.OpenAPI;
-import com.wdg.common.enums.ResultCode;
-import com.wdg.common.exception.BusinessException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -32,8 +30,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         //有注解@OpenAPI标注的方法，直接通过
         if (openAPI != null) {
             return true;
-        } else {
-            throw new BusinessException(ResultCode.NOT_LOGIN);
+        }else{
+            return true;
         }
 
         //String token = request.getHeader(header);//获取请求头中的令牌

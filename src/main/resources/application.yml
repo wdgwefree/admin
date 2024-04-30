@@ -21,7 +21,7 @@ spring:
 # 详细配置文档：https://sa-token.cc/doc.html#/use/config
 sa-token:
   # token名称
-  token-name: Authorization
+  token-name: admin-token
   # token风格
   token-style: simple-uuid
   # 是否允许同一账号并发登录
