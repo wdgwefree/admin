@@ -1,6 +1,5 @@
 package com.wdg.demo.controller;
 
-import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.demo.service.UserRegisterEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ public class MyController {
 
 
     @GetMapping("/test")
-    @OpenAPI
     public ApiResult test() {
         applicationEventPublisher.publishEvent(new UserRegisterEvent(this));
         return ApiResult.success();

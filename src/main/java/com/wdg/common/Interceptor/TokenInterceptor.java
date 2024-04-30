@@ -1,13 +1,11 @@
 package com.wdg.common.Interceptor;
 
-import com.wdg.common.annotation.OpenAPI;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
 
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
@@ -24,15 +22,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
-        OpenAPI openAPI = method.getAnnotation(OpenAPI.class);
-        //有注解@OpenAPI标注的方法，直接通过
-        if (openAPI != null) {
-            return true;
-        }else{
-            return true;
-        }
+        return true;
 
         //String token = request.getHeader(header);//获取请求头中的令牌
         //

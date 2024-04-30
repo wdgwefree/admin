@@ -26,7 +26,7 @@ public class ControllerConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //不需要拦截的接口在此处添加,或者在接口方法上用@OpenAPI标注
+        //不需要拦截的接口在此处添加,或者在接口方法上用标注
         List<String> patterns = new ArrayList<>();
         patterns.add("/druid/**");
         patterns.add("/error");

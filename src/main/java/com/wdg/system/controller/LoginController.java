@@ -1,7 +1,6 @@
 package com.wdg.system.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.service.LoginService;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class LoginController {
 
@@ -18,7 +19,6 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    @OpenAPI
     public ApiResult login(@RequestBody LoginDTO loginDTO) {
         String tokenValue = loginService.login(loginDTO);
         return ApiResult.success(tokenValue);
@@ -34,8 +34,13 @@ public class LoginController {
     /**
      * 获取当前登录的用户信息
      */
+
     @GetMapping("/getLoginInfo")
     public ApiResult getLoginInfo() {
+        List<String> permissionList = StpUtil.getPermissionList();
+        System.out.println(permissionList);
+        List<String> roleList = StpUtil.getRoleList();
+        System.out.println(roleList);
         return ApiResult.success();
     }
 }
