@@ -1,5 +1,6 @@
 package com.wdg.common.Interceptor;
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -31,6 +32,9 @@ public class ControllerConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外
+
+        // 注册 Sa-Token 拦截器，打开注解式鉴权功能
+        registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
     }
 
     @Override

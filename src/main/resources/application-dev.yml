@@ -3,6 +3,12 @@ app:
   environment: dev
 
 spring:
+
+  # 热加载配置
+  devtools:
+    restart:
+      enabled: true
+
   #数据库配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

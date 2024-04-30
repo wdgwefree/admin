@@ -1,6 +1,7 @@
 package com.wdg.system.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.service.LoginService;
@@ -17,6 +18,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
+    @OpenAPI
     public ApiResult login(@RequestBody LoginDTO loginDTO) {
         String tokenValue = loginService.login(loginDTO);
         return ApiResult.success(tokenValue);
