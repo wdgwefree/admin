@@ -1,5 +1,8 @@
 package com.wdg.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.wdg.common.constant.StatusConstants;
+import com.wdg.system.dto.MenuDTO;
 import com.wdg.system.entity.SysMenu;
 import com.wdg.system.mapper.SysMenuMapper;
 import com.wdg.system.service.ISysMenuService;
@@ -16,5 +19,28 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
+
+    @Override
+    public void add(MenuDTO menuDTO) {
+        SysMenu sysMenu = new SysMenu();
+        BeanUtil.copyProperties(menuDTO, sysMenu);
+        this.save(sysMenu);
+    }
+
+    @Override
+    public void updateMenu(MenuDTO menuDTO) {
+        SysMenu sysMenu = new SysMenu();
+        BeanUtil.copyProperties(menuDTO, sysMenu);
+        this.updateById(sysMenu);
+    }
+
+    @Override
+    public void deleteById(Long menuId) {
+        SysMenu sysMenu = new SysMenu();
+        sysMenu.setMenuId(menuId);
+        sysMenu.setStatus(StatusConstants.NOT_EXIST);
+        this.updateById(sysMenu);
+    }
+
 
 }

@@ -1,7 +1,8 @@
 package com.wdg.system.service;
 
-import com.wdg.system.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wdg.system.dto.MenuDTO;
+import com.wdg.system.entity.SysMenu;
 
 /**
  * <p>
@@ -13,4 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
+    void add(MenuDTO menuDTO);
+
+    void updateMenu(MenuDTO menuDTO);
+
+    void deleteById(Long menuId);
 }
