@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标注不需要拦截的接口
+ * 忽略认证：表示被修饰的方法或类无需进行注解认证和路由拦截认证。
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface  OpenAPI {
+public @interface OpenAPI {
 }
