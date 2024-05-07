@@ -169,20 +169,6 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.37.0</version>
-        </dependency>
-
-        <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-jackson</artifactId>
-            <version>1.37.0</version>
-        </dependency>
-
-
         <!--生成表结构文档-->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>

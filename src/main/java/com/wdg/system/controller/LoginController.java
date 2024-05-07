@@ -1,6 +1,5 @@
 package com.wdg.system.controller;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.service.LoginService;
@@ -9,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class LoginController {
@@ -27,7 +24,6 @@ public class LoginController {
 
     @GetMapping("/logout")
     public ApiResult logout() {
-        StpUtil.logout();
         return ApiResult.success();
     }
 
@@ -36,11 +32,7 @@ public class LoginController {
      */
 
     @GetMapping("/getLoginInfo")
-    public ApiResult getLoginInfo() {
-        List<String> permissionList = StpUtil.getPermissionList();
-        System.out.println(permissionList);
-        List<String> roleList = StpUtil.getRoleList();
-        System.out.println(roleList);
+    public ApiResult getLoginInfo() { ;
         return ApiResult.success();
     }
 }

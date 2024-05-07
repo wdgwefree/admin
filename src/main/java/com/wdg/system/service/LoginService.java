@@ -1,6 +1,5 @@
 package com.wdg.system.service;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wdg.common.constant.StatusConstants;
 import com.wdg.common.enums.ResultCode;
@@ -39,11 +38,10 @@ public class LoginService {
         }
         stopWatch.stop();
         stopWatch.start("sa-token");
-        StpUtil.login(userAccount);
         stopWatch.stop();
         System.out.println(stopWatch.prettyPrint());
-        String tokenValue = StpUtil.getTokenInfo().getTokenValue();
-        return tokenValue;
+        //String tokenValue = StpUtil.getTokenInfo().getTokenValue();
+        return "";
 
     }
 }
