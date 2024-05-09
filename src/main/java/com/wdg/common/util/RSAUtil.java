@@ -1,4 +1,4 @@
-package com.wdg.common.utils;
+package com.wdg.common.util;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.crypto.asymmetric.KeyType;

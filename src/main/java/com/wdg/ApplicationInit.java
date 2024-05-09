@@ -1,8 +1,8 @@
 package com.wdg;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wdg.common.utils.MinioUtil;
-import com.wdg.common.utils.RedisCache;
+import com.wdg.common.util.MinioUtil;
+import com.wdg.common.util.RedisCache;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Value;

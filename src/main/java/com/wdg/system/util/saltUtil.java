@@ -1,4 +1,4 @@
-package com.wdg.system.utils;
+package com.wdg.system.util;
 
 import java.security.SecureRandom;
 

@@ -1,7 +1,7 @@
 package com.wdg;
 
 import cn.hutool.core.util.HexUtil;
-import com.wdg.common.utils.RedisCache;
+import com.wdg.common.util.RedisCache;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.DigestUtils;

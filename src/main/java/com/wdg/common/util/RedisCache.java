@@ -1,4 +1,4 @@
-package com.wdg.common.utils;
+package com.wdg.common.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.MessageListener;

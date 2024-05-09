@@ -1,4 +1,4 @@
-package com.wdg.common.utils;
+package com.wdg.common.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

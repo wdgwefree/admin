@@ -1,7 +1,7 @@
 package com.wdg.system.dto;
 
 
-import com.wdg.common.utils.ValidatedGroup;
+import com.wdg.common.util.ValidatedGroup;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

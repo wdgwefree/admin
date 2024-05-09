@@ -1,4 +1,4 @@
-package com.wdg.common.utils;
+package com.wdg.common.util;
 
 import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.fastjson.JSONObject;

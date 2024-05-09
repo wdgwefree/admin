@@ -1,7 +1,7 @@
 package com.wdg.system.dto;
 
 
-import com.wdg.common.utils.ValidatedGroup;
+import com.wdg.common.util.ValidatedGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;

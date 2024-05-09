@@ -2,7 +2,7 @@ package com.wdg.system.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.wdg.common.dto.page.PageData;
-import com.wdg.common.utils.PageUtil;
+import com.wdg.common.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

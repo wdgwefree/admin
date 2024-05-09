@@ -2,7 +2,7 @@ package com.wdg.system.controller;
 
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
-import com.wdg.common.utils.ValidatedGroup;
+import com.wdg.common.util.ValidatedGroup;
 import com.wdg.system.dto.SysUserDTO;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.service.ISysUserService;

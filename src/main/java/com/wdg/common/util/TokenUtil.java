@@ -1,4 +1,4 @@
-package com.wdg.common.utils;
+package com.wdg.common.util;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.jwt.JWTUtil;

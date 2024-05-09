@@ -1,6 +1,6 @@
 package com.wdg.common.config;
 
-import com.wdg.common.utils.Threads;
+import com.wdg.common.util.Threads;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
