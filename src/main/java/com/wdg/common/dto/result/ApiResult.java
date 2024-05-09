@@ -17,7 +17,7 @@ public class ApiResult implements Serializable {
     /**
      * 状态码
      */
-    private Integer code;
+    private String code;
 
     /**
      * 描述信息
@@ -48,7 +48,7 @@ public class ApiResult implements Serializable {
         this.data = null;
     }
 
-    public ApiResult(Integer code, String msg) {
+    public ApiResult(String code, String msg) {
         this.code = code;
         this.msg = msg;
         this.data = null;
@@ -115,7 +115,7 @@ public class ApiResult implements Serializable {
      * @param msg
      * @return
      */
-    public static ApiResult exception(Integer code, String msg) {
+    public static ApiResult exception(String code, String msg) {
         return new ApiResult(code, msg);
     }
 

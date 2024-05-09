@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    private Integer code;
+    private String code;
     private String msg;
 
 
@@ -20,7 +20,7 @@ public class BusinessException extends RuntimeException {
     }
 
     //用于指定错误信息
-    public BusinessException(Integer code, String msg) {
+    public BusinessException(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
