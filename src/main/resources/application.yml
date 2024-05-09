@@ -18,22 +18,17 @@ spring:
   resources:
     static-locations: classpath:/static/
 
-# 详细配置文档：https://sa-token.cc/doc.html#/use/config
-sa-token:
-  # token名称
-  token-name: admin-token
-  # token风格
-  token-style: simple-uuid
-  # 是否允许同一账号并发登录
-  is-concurrent: false
-  # 打印banner
-  is-print: false
-#  # 是否尝试从请求体里读取token
-#  is-read-body: false
-#  # 是否尝试从cookie里读取token
-#  is-read-cookie: false
-
-  # token 有效期，单位=秒；默认30天，-1代表永不过期
-  timeout: 3600
-  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
-  active-timeout: -1
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+  #距离令牌到期多久续期(默认20分钟)
+  alarmTime: 20
+  # 是否允许多设备同时登录(true:允许 false:不允许),默认允许
+  concurrent: true
+  # 同账号最大在线个数(如果concurrent为false，max_user将失效)
+  concurrentMax: 5
