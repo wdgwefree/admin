@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wdg.common.constant.MinioConstants;
 import com.wdg.common.constant.StatusConstants;
 import com.wdg.common.dto.result.MinioResult;
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import com.wdg.common.exception.BusinessException;
 import com.wdg.common.util.FileService;
 import com.wdg.system.dto.SysUserDTO;

@@ -1,4 +1,4 @@
-package com.wdg.common.enums;
+package com.wdg.common.constant;
 
 public enum ResultCode {
 

@@ -4,7 +4,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.wdg.common.exception.BusinessException;
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package com.wdg.common.exception;
 
 import com.wdg.common.dto.result.ApiResult;
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import com.wdg.common.util.MyServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;

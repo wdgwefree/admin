@@ -1,6 +1,6 @@
 package com.wdg.common.exception;
 
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import lombok.Getter;
 
 /**

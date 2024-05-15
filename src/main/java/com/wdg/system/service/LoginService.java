@@ -2,7 +2,7 @@ package com.wdg.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wdg.common.constant.StatusConstants;
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import com.wdg.common.exception.BusinessException;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.entity.SysUser;

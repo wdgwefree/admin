@@ -1,6 +1,6 @@
 package com.wdg.common.dto.result;
 
-import com.wdg.common.enums.ResultCode;
+import com.wdg.common.constant.ResultCode;
 import lombok.Data;
 
 import java.io.Serializable;
