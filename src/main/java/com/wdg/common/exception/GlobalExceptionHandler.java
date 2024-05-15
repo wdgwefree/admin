@@ -43,13 +43,13 @@ public class GlobalExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String msg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().get(0).getDefaultMessage();
             log.error("参数异常[MethodArgumentNotValidException]：" + e.getMessage());
-            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), msg);
+            return ApiResult.exception(ResultCode.PARAM_ERROR.getCode(), msg);
         } else if (e instanceof HttpMessageNotReadableException) {
             log.error("参数异常[HttpMessageNotReadableException]：" + e.getMessage());
-            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), "请求参数类型不匹配");
+            return ApiResult.exception(ResultCode.PARAM_ERROR.getCode(), "请求参数类型不匹配");
         } else if (e instanceof MissingServletRequestParameterException) {
             log.error("参数异常[MissingServletRequestParameterException]：" + e.getMessage());
-            return ApiResult.exception(ResultCode.ARGUMENT_EXCEPTION.getCode(), getExceptionMsg(e));
+            return ApiResult.exception(ResultCode.PARAM_ERROR.getCode(), getExceptionMsg(e));
         } else {
             log.error("异常[Exception]：" + e.getMessage());
             return ApiResult.exception(getExceptionMsg(e));

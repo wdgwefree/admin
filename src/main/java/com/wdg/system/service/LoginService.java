@@ -27,7 +27,7 @@ public class LoginService {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserAccount, userAccount);
         SysUser sysUser = iSysUserService.getOne(queryWrapper);
         if (sysUser == null){
-            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+            throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND);
         }
         if (StatusConstants.DEACTIVATE.equals(sysUser.getStatus())){
             throw new BusinessException(ResultCode.USER_ACCOUNT_DISABLED);

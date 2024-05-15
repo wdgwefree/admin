@@ -40,7 +40,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void add(SysUserDTO sysUserDTO) {
         boolean exist = this.checkUserAccountExist(sysUserDTO.getUserAccount());
         if (exist) {
-            throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST,sysUserDTO.getUserAccount());
+            throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND,sysUserDTO.getUserAccount());
         }
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserDTO, sysUser);
@@ -66,10 +66,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void deleteById(Long userId) {
         SysUser sysUser = getOne(new LambdaQueryWrapper<SysUser>().select(SysUser::getUserId, SysUser::getStatus));
         if (sysUser == null) {
-            throw new BusinessException(ResultCode.USER_NOT_FOUND);
-        }
-        if (StatusConstants.NOT_EXIST.equals(sysUser.getStatus())) {
-            throw new BusinessException(ResultCode.USER_ACCOUNT_AlREADY_EXIST);
+            throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND);
         }
         sysUser.setStatus(StatusConstants.NOT_EXIST);
         updateById(sysUser);
@@ -79,13 +76,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void updateSysUser(SysUserDTO sysUserDTO) {
         SysUser oldUser = getById(sysUserDTO.getUserId());
         if (oldUser == null) {
-            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+            throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND);
         }
         //用户账号如果修改了，需要判断用户账号是否已经存在
         if (!oldUser.getUserAccount().equals(sysUserDTO.getUserAccount())) {
             boolean exist = checkUserAccountExist(sysUserDTO.getUserAccount());
             if (exist) {
-                throw new BusinessException(ResultCode.USER_ACCOUNT_EXIST);
+                throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND);
             }
         }
         SysUser newUser = new SysUser();

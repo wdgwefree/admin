@@ -138,6 +138,6 @@ public class ApiResult implements Serializable {
      * @return
      */
     public static ApiResult paramsException(String msg) {
-        return new ApiResult(ResultCode.ARGUMENT_EXCEPTION.getCode(), msg);
+        return new ApiResult(ResultCode.PARAM_ERROR.getCode(), msg);
     }
 }

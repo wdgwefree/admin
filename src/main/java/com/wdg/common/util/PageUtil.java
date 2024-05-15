@@ -31,7 +31,7 @@ public class PageUtil {
                 }
             }
         } catch (Exception e) {
-            throw new BusinessException(ResultCode.ARGUMENT_EXCEPTION.getCode(), "分页参数异常");
+            throw new BusinessException(ResultCode.PARAM_ERROR.getCode(), "分页参数异常");
         }
     }
 }
