@@ -1,4 +1,4 @@
-package com.wdg.test;
+package com.wdg.common.util;
 
 import cn.smallbun.screw.core.Configuration;
 import cn.smallbun.screw.core.engine.EngineConfig;

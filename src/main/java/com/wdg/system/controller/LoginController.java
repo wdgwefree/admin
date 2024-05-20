@@ -1,5 +1,6 @@
 package com.wdg.system.controller;
 
+import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.service.LoginService;
@@ -9,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 登录控制器类
+ *
+ * @author wdg
+ */
 @RestController
 public class LoginController {
 
@@ -16,6 +22,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
+    @OpenAPI
     public ApiResult login(@RequestBody LoginDTO loginDTO) {
         String tokenValue = loginService.login(loginDTO);
         return ApiResult.success(tokenValue);
@@ -32,7 +39,8 @@ public class LoginController {
      */
 
     @GetMapping("/getLoginInfo")
-    public ApiResult getLoginInfo() { ;
+    public ApiResult getLoginInfo() {
+        ;
         return ApiResult.success();
     }
 }

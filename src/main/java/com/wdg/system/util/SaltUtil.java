@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 /**
  * 盐值处理
  */
-public class saltUtil {
+public class SaltUtil {
 
     /**
      * 生成盐值

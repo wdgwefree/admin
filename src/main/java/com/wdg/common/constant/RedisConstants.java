@@ -5,9 +5,13 @@ package com.wdg.common.constant;
  */
 public class RedisConstants {
 
+
     /**
-     * 系统用户token前缀
+     * 登录token
      */
-    public static final String SYS_USER_TOKEN="sys_user_token:";
+    public static final String SYS_USER_TOKEN="login:token:";
+
+
+    public static final String SYS_USER_INFO="login:session:";
 
 }

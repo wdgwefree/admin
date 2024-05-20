@@ -5,12 +5,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @description: 读取token相关配置
- */
+ * @description: token属性配置
+ * @author: wdg
+ * @date: 2024/5/17
+**/
 @Component
 @ConfigurationProperties(prefix = "token")
 @Data
-public class TokenConfig {
+public class TokenProperties {
     /**
      * 令牌自定义标识
      */
@@ -18,7 +20,7 @@ public class TokenConfig {
     /**
      * 令牌密钥
      */
-    private String secret = "abcdefghijklmnopqrstuvwxyzza";
+    private String secret = "//**/x";
     /**
      * 令牌有效期（默认30分钟）
      */
