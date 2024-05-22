@@ -1,6 +1,6 @@
 server:
   name: admin
-  port: 8188
+  port: 8189
   servlet:
     context-path: /admin
 

@@ -1,7 +1,9 @@
 package com.wdg.system.mapper;
 
-import com.wdg.system.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wdg.system.entity.SysRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2024-04-22
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
+
+    List<SysRole> listRoleByUserId(Long userId);
 
 }

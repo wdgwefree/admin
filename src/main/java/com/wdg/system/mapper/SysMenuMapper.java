@@ -1,7 +1,9 @@
 package com.wdg.system.mapper;
 
-import com.wdg.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wdg.system.entity.SysMenu;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
+    List<SysMenu> listPermissionByUserId(Long userId);
 }

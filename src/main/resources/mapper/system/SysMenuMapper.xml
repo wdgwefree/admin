@@ -4,22 +4,37 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wdg.system.entity.SysMenu">
-        <id column="menu_id" property="menuId" />
-        <result column="menu_name" property="menuName" />
-        <result column="parent_id" property="parentId" />
-        <result column="order_num" property="orderNum" />
-        <result column="url" property="url" />
-        <result column="target" property="target" />
-        <result column="menu_type" property="menuType" />
-        <result column="status" property="status" />
-        <result column="perm" property="perm" />
-        <result column="icon" property="icon" />
-        <result column="remark" property="remark" />
+        <id column="menu_id" property="menuId"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="url" property="url"/>
+        <result column="target" property="target"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="status" property="status"/>
+        <result column="perm" property="perm"/>
+        <result column="icon" property="icon"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        menu_id, menu_name, parent_id, order_num, url, target, menu_type, status, perm, icon, remark
+        menu_id
+        , menu_name, parent_id, order_num, url, target, menu_type, status, perm, icon, remark
     </sql>
+
+    <select id="listPermissionByUserId" parameterType="Long" resultType="SysMenu">
+        SELECT menu.menu_id,
+               menu.menu_name,
+               menu.menu_type,
+               menu.perm
+        FROM sys_menu menu
+                 LEFT JOIN sys_role_menu rm ON menu.menu_id = rm.menu_id
+                 left JOIN sys_user_role ur on rm.role_id = ur.role_id
+                 left join sys_role role on ur.role_id = role.role_id
+        where ur.user_id = #{userId}
+          and role.status = '0'
+          and menu.status = '0'
+    </select>
 
 </mapper>

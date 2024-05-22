@@ -1,7 +1,9 @@
 package com.wdg.system.service;
 
-import com.wdg.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wdg.system.entity.SysRole;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-04-22
  */
 public interface ISysRoleService extends IService<SysRole> {
+
+    List<SysRole> listRoleByUserId(Long userId);
 
 }

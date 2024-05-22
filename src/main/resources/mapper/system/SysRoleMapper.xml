@@ -4,19 +4,32 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wdg.system.entity.SysRole">
-        <id column="role_id" property="roleId" />
-        <result column="role_name" property="roleName" />
-        <result column="role_key" property="roleKey" />
-        <result column="order_num" property="orderNum" />
-        <result column="status" property="status" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="remark" property="remark" />
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_key" property="roleKey"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        role_id, role_name, role_key, order_num, status, create_time, update_time, remark
+        role_id
+        , role_name, role_key, order_num, status, create_time, update_time, remark
     </sql>
+
+    <select id="listRoleByUserId" parameterType="Long" resultType="SysRole">
+        SELECT
+            role.role_id,
+            role.role_name,
+            role.role_key
+        FROM
+            `sys_user_role` us
+                JOIN sys_role role ON us.role_id = role.role_id
+        WHERE
+            us.user_id = #{userId}}
+    </select>
 
 </mapper>
