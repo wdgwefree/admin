@@ -20,4 +20,15 @@ public class RedisConstants {
      */
     public static final String LOGIN_SESSION = "login:session:";
 
+    /**
+     * 密码错误尝试次数
+     */
+    public static final String LOGIN_ERROR = "login:error:";
+
+
+    /**
+     * 密码错误锁定
+     */
+    public static final String LOGIN_LOCK = "login:lock:";
+
 }

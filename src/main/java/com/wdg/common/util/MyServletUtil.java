@@ -10,7 +10,10 @@ import java.io.IOException;
 
 /**
  * 客户端工具类
- */
+ *
+ * @author: wdg
+ * @date: 2024/5/22
+ **/
 public class MyServletUtil {
 
     /**
@@ -28,7 +31,6 @@ public class MyServletUtil {
         return getRequestAttributes().getResponse();
     }
 
-    
 
     /**
      * 将字符串渲染到HTTP响应中

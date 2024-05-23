@@ -1,9 +1,9 @@
 package com.wdg.system.dto;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 登录token的Dto
@@ -12,16 +12,32 @@ import java.util.Date;
  * @date: 2024/05/21
  */
 @Data
-public class LoginTokenDTO  implements Serializable {
+public class LoginTokenDTO implements Serializable,Comparable<LoginTokenDTO> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * token
+     * tokenKey
      */
-    private String token;
+    private String tokenKey;
+
+    /**
+     * 登录ip
+     */
+    private String LoginIp;
 
     /**
      * 创建时间
      */
-    private Date creteDate;
+    private String creteDate;
+
+    /**
+     * 创建时间
+     */
+    private String updateDate;
+
+
+    @Override
+    public int compareTo(@NotNull LoginTokenDTO o) {
+        return this.creteDate.compareTo(o.creteDate);
+    }
 }

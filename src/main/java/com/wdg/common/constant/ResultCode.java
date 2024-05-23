@@ -43,7 +43,7 @@ public enum ResultCode {
     USER_ACCOUNT_LOCKED("A0206", "用户账号已锁定"),
     USER_LOGIN_OVER_MAX_LIMIT("A0207", "用户登录超出限制，用户被挤下线"),
     USER_PASSWORD_ERROR("A0210", "用户密码错误"),
-    USER_PASSWORD_ERROR_OVER_MAX_LIMIT("A0211", "用户密码错误次数超限"),
+    USER_PASSWORD_ERROR_OVER_MAX_LIMIT("A0211", "密码错误频繁，该账号已被锁定，请稍后再试"),
 
 
     /**

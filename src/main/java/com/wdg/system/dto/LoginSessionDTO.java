@@ -3,6 +3,8 @@ package com.wdg.system.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * 登录会话DTO
@@ -59,6 +61,20 @@ public class LoginSessionDTO implements Serializable {
      */
     private String avatar;
 
+    /**
+     * 用户权限集合
+     */
+    private List<String> permissions;
+
+    /**
+     * 用户角色集合
+     */
+    private List<String> roles;
+
+    /**
+     * 登录token集合
+     */
+    private TreeSet<LoginTokenDTO> loginTokenDTOS;
 
 
 }

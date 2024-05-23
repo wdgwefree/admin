@@ -43,6 +43,15 @@ public final class RedisCache {
     }
 
     /**
+     * 递增缓存的值
+     *
+     * @param key 缓存的键值
+     * @return 递增后的值
+     */
+    public Long incrementCacheObject(final String key) {
+        return redisTemplate.opsForValue().increment(key);
+    }
+    /**
      * 设置有效时间
      *
      * @param key     Redis键
