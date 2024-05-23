@@ -4,6 +4,7 @@ import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginDTO;
 import com.wdg.system.service.LoginService;
+import com.wdg.system.util.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,12 @@ public class LoginController {
     public ApiResult login(@RequestBody LoginDTO loginDTO) {
         String tokenValue = loginService.login(loginDTO);
         return ApiResult.success(tokenValue);
+    }
+
+    @PostMapping("/getAdminPwd")
+    @OpenAPI
+    public ApiResult getEncryptPwd(String pwd) {
+        return ApiResult.success(RsaUtil.encryptByPublicKey(pwd));
     }
 
 

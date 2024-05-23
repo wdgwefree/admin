@@ -29,7 +29,7 @@
             `sys_user_role` us
                 JOIN sys_role role ON us.role_id = role.role_id
         WHERE
-            us.user_id = #{userId}}
+            us.user_id = #{userId}
     </select>
 
 </mapper>

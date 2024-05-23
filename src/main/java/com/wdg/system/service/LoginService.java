@@ -35,7 +35,7 @@ public class LoginService {
         String password = loginDTO.getPassword();
 
         //账号、状态、密码校验
-        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserAccount, userAccount);
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserAccount, userAccount).ne(SysUser::getStatus, StatusConstants.NOT_EXIST);
         SysUser sysUser = iSysUserService.getOne(queryWrapper);
         if (sysUser == null) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND);
@@ -48,6 +48,7 @@ public class LoginService {
         try {
             pwd = DigestUtils.md5DigestAsHex((RsaUtil.decryptByPrivateKey(password) + sysUser.getSalt()).getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
+            tokenUtil.loginPasswordError(sysUser.getUserId());
             throw new BusinessException(ResultCode.USER_PASSWORD_ERROR);
         }
         if (!pwd.equals(sysUser.getPassword())) {
@@ -58,6 +59,4 @@ public class LoginService {
         String token = tokenUtil.generateToken(sysUser);
         return token;
     }
-
-
 }

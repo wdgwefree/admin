@@ -15,6 +15,12 @@ import java.util.List;
  */
 public interface ISysRoleService extends IService<SysRole> {
 
+    /**
+     * 根据用户id查询角色列表
+     *
+     * @param userId
+     * @return
+     */
     List<SysRole> listRoleByUserId(Long userId);
 
 }
