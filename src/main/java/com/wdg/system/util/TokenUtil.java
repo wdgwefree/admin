@@ -83,7 +83,7 @@ public class TokenUtil {
             BeanUtils.copyProperties(sysUser, loginSessionDTO);
             loginSessionDTO.setPermissions(permissions);
             loginSessionDTO.setRoles(roles);
-            TreeSet<LoginTokenDTO> loginTokenDTOS = new TreeSet<>();
+            LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
             loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
         }
 
@@ -100,7 +100,7 @@ public class TokenUtil {
 
         } else {
             //禁止多端登录,始终保持只有一个token生效
-            TreeSet<LoginTokenDTO> loginTokenDTOS = new TreeSet<>();
+            LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
             loginTokenDTOS.add(loginTokenDTO);
             loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
 

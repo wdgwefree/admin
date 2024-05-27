@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * 登录会话DTO
@@ -74,7 +73,7 @@ public class LoginSessionDTO implements Serializable {
     /**
      * 登录token集合
      */
-    private TreeSet<LoginTokenDTO> loginTokenDTOS;
+    private List<LoginTokenDTO> loginTokenDTOS;
 
 
 }

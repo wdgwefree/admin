@@ -38,7 +38,7 @@ public enum ResultCode {
     NOT_LOGIN("A0201", "用户未登录"),
     USER_ACCOUNT_NOT_FOUND("A0202", "用户账号不存在"),
     USER_ACCOUNT_AlREADY_EXIST("A0203", "用户账号已存在"),
-    USER_ACCOUNT_DISABLED("A0204", "用户账号已禁用"),
+    USER_ACCOUNT_DISABLED("A0204", "用户账号已停用"),
     USER_ACCOUNT_AlREADY_DELETED("A0205", "用户账号已作废"),
     USER_ACCOUNT_LOCKED("A0206", "用户账号已锁定"),
     USER_LOGIN_OVER_MAX_LIMIT("A0207", "用户登录超出限制，用户被挤下线"),

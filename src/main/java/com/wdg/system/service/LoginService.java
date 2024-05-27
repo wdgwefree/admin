@@ -44,12 +44,11 @@ public class LoginService {
             throw new BusinessException(ResultCode.USER_ACCOUNT_DISABLED);
         }
         tokenUtil.checkLoginLock(sysUser.getUserId());
-        String pwd = null;
+        String pwd = "";
         try {
             pwd = DigestUtils.md5DigestAsHex((RsaUtil.decryptByPrivateKey(password) + sysUser.getSalt()).getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            tokenUtil.loginPasswordError(sysUser.getUserId());
-            throw new BusinessException(ResultCode.USER_PASSWORD_ERROR);
+            pwd="";
         }
         if (!pwd.equals(sysUser.getPassword())) {
             tokenUtil.loginPasswordError(sysUser.getUserId());
