@@ -60,7 +60,7 @@ public class ApplicationInit implements ApplicationRunner {
      */
     private void mysqlTest() {
         try {
-            isSysUserService.getOne(new LambdaQueryWrapper<SysUser>().last("limit 1"));
+            isSysUserService.getOne(new LambdaQueryWrapper<SysUser>().select(SysUser::getUserId).last("limit 1"));
             msgStr.append("mysql连接   √\n");
         } catch (Exception e) {
             msgStr.append("mysql连接   ×\n");
