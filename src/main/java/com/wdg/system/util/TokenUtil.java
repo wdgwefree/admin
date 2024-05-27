@@ -91,9 +91,10 @@ public class TokenUtil {
         Boolean concurrent = tokenProperties.getConcurrent();
         if (concurrent) {
             if (loginSessionDTO.getLoginTokenDTOS().size() >= tokenProperties.getConcurrentMax()) {
-                //超出最大允许登录数,删除最早登录的token
+                //超出最大允许登录数,删除会话中最早登录的token
                 Iterator<LoginTokenDTO> iterator = loginSessionDTO.getLoginTokenDTOS().iterator();
-                iterator.next();
+                LoginTokenDTO next = iterator.next();
+                redisCache.deleteObject(RedisConstants.LOGIN_TOKEN + next.getTokenKey());
                 iterator.remove();
             }
             loginSessionDTO.getLoginTokenDTOS().add(loginTokenDTO);
