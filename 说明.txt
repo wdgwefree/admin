@@ -57,3 +57,21 @@ token相关
 @OpenAPI        //忽略认证,用于无需授权即可访问的接口
 @CheckPermission("user.add")        //校验当前账号是否有"user.add"权限
 @CheckRole("admin")     //校验当前账号是否有"admin"角色
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

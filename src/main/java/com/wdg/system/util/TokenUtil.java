@@ -19,6 +19,7 @@ import com.wdg.system.service.ISysRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -76,6 +77,9 @@ public class TokenUtil {
         loginTokenDTO.setUpdateDate(currentDate);
         loginTokenDTO.setLoginIp(clientIP);
 
+        // WDGTODO: 2024/5/27  在多线程并发情况下存在问题,考虑加锁？
+        StopWatch tokenWatch = new StopWatch("lock");
+        tokenWatch.start();
         //redis是否已有会话记录
         LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
         if (loginSessionDTO == null) {
@@ -110,6 +114,8 @@ public class TokenUtil {
         //缓存用户会话与登录信息
         redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
         redisCache.setCacheObject(RedisConstants.LOGIN_SESSION + userId, loginSessionDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
+        tokenWatch.stop();
+        System.out.println("耗时"+tokenWatch.getTotalTimeMillis());
         return token;
     }
 

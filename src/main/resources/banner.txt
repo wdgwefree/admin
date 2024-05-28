@@ -4,7 +4,7 @@ wdgAdmin服务     开始启动
 Project Version 1.0
 mybatis-plus
 mysql、redis、minio
-sa-token
+自定义授权、权限校验
 全局统一返回、全局异常处理、日志文件记录、请求参数校验、自定义拦截器
 -------------------------------------------------------------------------
 ${AnsiColor.DEFAULT}
