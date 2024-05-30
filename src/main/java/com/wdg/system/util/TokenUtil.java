@@ -9,22 +9,16 @@ import com.wdg.common.constant.ResultCode;
 import com.wdg.common.exception.BusinessException;
 import com.wdg.common.util.MyServletUtil;
 import com.wdg.common.util.RedisCache;
-import com.wdg.system.dto.LoginSessionDTO;
 import com.wdg.system.dto.LoginTokenDTO;
-import com.wdg.system.entity.SysMenu;
-import com.wdg.system.entity.SysRole;
 import com.wdg.system.entity.SysUser;
-import com.wdg.system.service.ISysMenuService;
-import com.wdg.system.service.ISysRoleService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @description: token工具类
@@ -38,14 +32,10 @@ public class TokenUtil {
     private TokenProperties tokenProperties;
 
     @Autowired
-    private ISysMenuService iSysMenuService;
-
-    @Autowired
-    private ISysRoleService iSysRoleService;
-
-    @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private AsyncUtil asyncUtil;
 
     /**
      * 生成token
@@ -55,11 +45,6 @@ public class TokenUtil {
     public String generateToken(SysUser sysUser) {
 
         Long userId = sysUser.getUserId();
-
-        //用户角色、权限查询
-        List<String> permissions = listPermissionByUserId(userId);
-        List<String> roles = listRoleByUserId(userId);
-
         //创建token
         String tokenKey = userId + ":" + IdUtil.getSnowflakeNextIdStr();
         Map<String, Object> map = new HashMap<>(2);
@@ -67,7 +52,7 @@ public class TokenUtil {
         map.put("tokenKey", tokenKey);
         String token = JWTUtil.createToken(map, tokenProperties.getSecret().getBytes());
 
-        //填充LoginTokenDTO对象（本次登录的基本信息）
+        //填充LoginTokenDTO对象（本次登录的基本信息） 并存到redis
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDate = dateFormat.format(new Date());
         String clientIP = ServletUtil.getClientIP(MyServletUtil.getRequest());
@@ -76,49 +61,13 @@ public class TokenUtil {
         loginTokenDTO.setCreteDate(currentDate);
         loginTokenDTO.setUpdateDate(currentDate);
         loginTokenDTO.setLoginIp(clientIP);
-        StopWatch tokenWatch = new StopWatch("lock");
-        tokenWatch.start();
-        // WDGTODO: 2024/5/27  在多线程并发情况下存在问题,考虑如何加锁？效率又如何？
-        synchronized(userId.toString().intern()){
-            //redis是否已有会话记录
-            LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
-            if (loginSessionDTO == null) {
-                loginSessionDTO = new LoginSessionDTO();
-                BeanUtils.copyProperties(sysUser, loginSessionDTO);
-                loginSessionDTO.setPermissions(permissions);
-                loginSessionDTO.setRoles(roles);
-                LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
-                loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
-            }
+        redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
 
-            //是否允许多端登录
-            Boolean concurrent = tokenProperties.getConcurrent();
-            if (concurrent) {
-                if (loginSessionDTO.getLoginTokenDTOS().size() >= tokenProperties.getConcurrentMax()) {
-                    //超出最大允许登录数,删除会话中最早登录的token
-                    Iterator<LoginTokenDTO> iterator = loginSessionDTO.getLoginTokenDTOS().iterator();
-                    LoginTokenDTO next = iterator.next();
-                    redisCache.deleteObject(RedisConstants.LOGIN_TOKEN + next.getTokenKey());
-                    iterator.remove();
-                }
-                loginSessionDTO.getLoginTokenDTOS().add(loginTokenDTO);
-
-            } else {
-                //禁止多端登录,始终保持只有一个token生效
-                LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
-                loginTokenDTOS.add(loginTokenDTO);
-                loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
-
-            }
-
-            //缓存用户会话与登录信息
-            redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
-            redisCache.setCacheObject(RedisConstants.LOGIN_SESSION + userId, loginSessionDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
-        }
-        tokenWatch.stop();
-        System.out.println("耗时"+tokenWatch.getTotalTimeMillis());
+        //异步处理会话和token （在不影响效率的前提下，避免同一账号多线程并发登录导致的竞态条件问题）
+        asyncUtil.asyncSession(sysUser, loginTokenDTO);
         return token;
     }
+
 
     /**
      * 校验token
@@ -129,28 +78,6 @@ public class TokenUtil {
         return true;
     }
 
-
-    /**
-     * 获取用户权限标识list
-     *
-     * @param userId
-     * @return
-     */
-    public List<String> listPermissionByUserId(Long userId) {
-        List<SysMenu> sysMenus = iSysMenuService.listPermissionByUserId(userId);
-        return sysMenus.stream().map(SysMenu::getPerm).collect(Collectors.toList());
-    }
-
-    /**
-     * 获取用户角色标识list
-     *
-     * @param userId
-     * @return
-     */
-    public List<String> listRoleByUserId(Long userId) {
-        List<SysRole> sysRoles = iSysRoleService.listRoleByUserId(userId);
-        return sysRoles.stream().map(SysRole::getRoleKey).collect(Collectors.toList());
-    }
 
     /**
      * 登录密码错误次数+1
