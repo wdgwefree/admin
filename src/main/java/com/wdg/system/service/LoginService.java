@@ -43,6 +43,7 @@ public class LoginService {
         if (StatusConstants.DEACTIVATE.equals(sysUser.getStatus())) {
             throw new BusinessException(ResultCode.USER_ACCOUNT_DISABLED);
         }
+        //检测登录是否被锁定
         tokenUtil.checkLoginLock(sysUser.getUserId());
         String pwd = "";
         try {
@@ -51,6 +52,7 @@ public class LoginService {
             pwd="";
         }
         if (!pwd.equals(sysUser.getPassword())) {
+            //记录密码错误次数
             tokenUtil.loginPasswordError(sysUser.getUserId());
             throw new BusinessException(ResultCode.USER_PASSWORD_ERROR);
         }

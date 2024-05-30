@@ -76,44 +76,45 @@ public class TokenUtil {
         loginTokenDTO.setCreteDate(currentDate);
         loginTokenDTO.setUpdateDate(currentDate);
         loginTokenDTO.setLoginIp(clientIP);
-
-        // WDGTODO: 2024/5/27  在多线程并发情况下存在问题,考虑加锁？
         StopWatch tokenWatch = new StopWatch("lock");
         tokenWatch.start();
-        //redis是否已有会话记录
-        LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
-        if (loginSessionDTO == null) {
-            loginSessionDTO = new LoginSessionDTO();
-            BeanUtils.copyProperties(sysUser, loginSessionDTO);
-            loginSessionDTO.setPermissions(permissions);
-            loginSessionDTO.setRoles(roles);
-            LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
-            loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
-        }
-
-        //是否允许多端登录
-        Boolean concurrent = tokenProperties.getConcurrent();
-        if (concurrent) {
-            if (loginSessionDTO.getLoginTokenDTOS().size() >= tokenProperties.getConcurrentMax()) {
-                //超出最大允许登录数,删除会话中最早登录的token
-                Iterator<LoginTokenDTO> iterator = loginSessionDTO.getLoginTokenDTOS().iterator();
-                LoginTokenDTO next = iterator.next();
-                redisCache.deleteObject(RedisConstants.LOGIN_TOKEN + next.getTokenKey());
-                iterator.remove();
+        // WDGTODO: 2024/5/27  在多线程并发情况下存在问题,考虑如何加锁？效率又如何？
+        synchronized(userId.toString().intern()){
+            //redis是否已有会话记录
+            LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
+            if (loginSessionDTO == null) {
+                loginSessionDTO = new LoginSessionDTO();
+                BeanUtils.copyProperties(sysUser, loginSessionDTO);
+                loginSessionDTO.setPermissions(permissions);
+                loginSessionDTO.setRoles(roles);
+                LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
+                loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
             }
-            loginSessionDTO.getLoginTokenDTOS().add(loginTokenDTO);
 
-        } else {
-            //禁止多端登录,始终保持只有一个token生效
-            LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
-            loginTokenDTOS.add(loginTokenDTO);
-            loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
+            //是否允许多端登录
+            Boolean concurrent = tokenProperties.getConcurrent();
+            if (concurrent) {
+                if (loginSessionDTO.getLoginTokenDTOS().size() >= tokenProperties.getConcurrentMax()) {
+                    //超出最大允许登录数,删除会话中最早登录的token
+                    Iterator<LoginTokenDTO> iterator = loginSessionDTO.getLoginTokenDTOS().iterator();
+                    LoginTokenDTO next = iterator.next();
+                    redisCache.deleteObject(RedisConstants.LOGIN_TOKEN + next.getTokenKey());
+                    iterator.remove();
+                }
+                loginSessionDTO.getLoginTokenDTOS().add(loginTokenDTO);
 
+            } else {
+                //禁止多端登录,始终保持只有一个token生效
+                LinkedList<LoginTokenDTO> loginTokenDTOS = new LinkedList<>();
+                loginTokenDTOS.add(loginTokenDTO);
+                loginSessionDTO.setLoginTokenDTOS(loginTokenDTOS);
+
+            }
+
+            //缓存用户会话与登录信息
+            redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
+            redisCache.setCacheObject(RedisConstants.LOGIN_SESSION + userId, loginSessionDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
         }
-
-        //缓存用户会话与登录信息
-        redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
-        redisCache.setCacheObject(RedisConstants.LOGIN_SESSION + userId, loginSessionDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
         tokenWatch.stop();
         System.out.println("耗时"+tokenWatch.getTotalTimeMillis());
         return token;
