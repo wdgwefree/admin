@@ -26,9 +26,9 @@ public class TokenProperties {
      */
     private Integer expireTime = 30;
     /**
-     * 距离令牌到期多久续期(默认20分钟)
+     * 距离令牌到期多久续期(默认10分钟)
      */
-    private Integer alarmTime = 20;
+    private Integer alarmTime = 10;
     /**
      * 是否允许多设备同时登录(true:允许 false:不允许)
      */

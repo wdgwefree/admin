@@ -26,8 +26,8 @@ token:
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
   expireTime: 30
-  #距离令牌到期多久续期(默认20分钟)
-  alarmTime: 20
+  #距离令牌到期多久续期(默认10分钟)
+  alarmTime: 10
   # 是否支持多端登录(true:允许 false:不允许),默认允许
   concurrent: true
   # 多端登录最大在线个数(如果concurrent为false，max_user将失效)

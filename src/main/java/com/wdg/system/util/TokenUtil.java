@@ -2,6 +2,7 @@ package com.wdg.system.util;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import com.wdg.common.config.TokenProperties;
 import com.wdg.common.constant.RedisConstants;
@@ -91,15 +92,18 @@ public class TokenUtil {
             throw new BusinessException(ResultCode.TOKEN_INVALID);
         }
         //token过期校验
-        String tokenKey = RedisConstants.LOGIN_TOKEN + JWTUtil.parseToken(token).getPayload("tokenKey").toString();
-        String userId = JWTUtil.parseToken(token).getPayload("userId").toString();
-        if (!redisCache.hasKey(tokenKey)) {
+        JWT jwt = JWTUtil.parseToken(token);
+        String tokenKey = RedisConstants.LOGIN_TOKEN + jwt.getPayload("tokenKey").toString();
+        String userId = jwt.getPayload("userId").toString();
+
+
+        //token是否过期校验
+        long expire = redisCache.getExpire(tokenKey);
+        if (expire == -2) {
             throw new BusinessException(ResultCode.TOKEN_EXPIRED);
         }
-
         //判断是否需要续期
-        long expire = redisCache.getExpire(tokenKey);
-        if (expire < Long.valueOf(tokenProperties.getAlarmTime()) * 60 * 1000) {
+        if (expire < Long.valueOf(tokenProperties.getAlarmTime()) * 60) {
             redisCache.expire(tokenKey, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
             redisCache.expire(RedisConstants.LOGIN_SESSION + userId, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
         }
