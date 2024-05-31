@@ -26,7 +26,7 @@ public enum ResultCode {
      * token相关（二级宏观错误码）
      */
     PARAM_ERROR("A0100", "请求参数异常"),
-    TOKEN_NOT_FOUND("A0101", "token不存在"),
+    TOKEN_NOT_FOUND("A0101", "token不能为空"),
     TOKEN_EXPIRED("A0102", "token已过期"),
     TOKEN_INVALID("A0103", "token无效"),
 

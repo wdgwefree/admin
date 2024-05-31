@@ -13,6 +13,7 @@ import com.wdg.system.dto.LoginInfoDTO;
 import com.wdg.system.dto.LoginSessionDTO;
 import com.wdg.system.dto.LoginTokenDTO;
 import com.wdg.system.entity.SysUser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,7 +63,6 @@ public class TokenUtil {
         LoginTokenDTO loginTokenDTO = new LoginTokenDTO();
         loginTokenDTO.setTokenKey(tokenKey);
         loginTokenDTO.setCreteDate(currentDate);
-        loginTokenDTO.setUpdateDate(currentDate);
         loginTokenDTO.setLoginIp(clientIP);
         redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
 
@@ -76,8 +76,33 @@ public class TokenUtil {
      * 校验token
      */
     public Boolean verifyToken(String token) {
-        String tokenKey = JWTUtil.parseToken(token).getPayload("tokenKey").toString();
+        //token空值校验
+        if (StringUtils.isBlank(token)) {
+            throw new BusinessException(ResultCode.TOKEN_NOT_FOUND);
+        }
+        boolean verify = false;
 
+        //token有效性校验
+        try {
+            verify = JWTUtil.verify(token, tokenProperties.getSecret().getBytes());
+        } catch (Exception e) {
+        }
+        if (!verify) {
+            throw new BusinessException(ResultCode.TOKEN_INVALID);
+        }
+        //token过期校验
+        String tokenKey = RedisConstants.LOGIN_TOKEN + JWTUtil.parseToken(token).getPayload("tokenKey").toString();
+        String userId = JWTUtil.parseToken(token).getPayload("userId").toString();
+        if (!redisCache.hasKey(tokenKey)) {
+            throw new BusinessException(ResultCode.TOKEN_EXPIRED);
+        }
+
+        //判断是否需要续期
+        long expire = redisCache.getExpire(tokenKey);
+        if (expire < Long.valueOf(tokenProperties.getAlarmTime()) * 60 * 1000) {
+            redisCache.expire(tokenKey, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
+            redisCache.expire(RedisConstants.LOGIN_SESSION + userId, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
+        }
         return true;
     }
 
@@ -87,7 +112,7 @@ public class TokenUtil {
      *
      * @return
      */
-    public LoginInfoDTO getLoginInfo() {
+    public LoginInfoDTO getLoginInfoDTO() {
         String token = MyServletUtil.getRequest().getHeader(tokenProperties.getHeader());
         String userId = JWTUtil.parseToken(token).getPayload("userId").toString();
         LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);

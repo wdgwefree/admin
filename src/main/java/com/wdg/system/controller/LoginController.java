@@ -2,6 +2,7 @@ package com.wdg.system.controller;
 
 import com.wdg.common.annotation.OpenAPI;
 import com.wdg.common.dto.result.ApiResult;
+import com.wdg.system.dto.LoginInfoDTO;
 import com.wdg.system.dto.LoginParams;
 import com.wdg.system.service.LoginService;
 import com.wdg.system.util.RsaUtil;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wdg
  */
 @RestController
-public class LoginController {
+public class LoginController extends BaseController {
 
     @Autowired
     private LoginService loginService;
@@ -39,12 +40,14 @@ public class LoginController {
      */
     @GetMapping("/getLoginInfo")
     public ApiResult getLoginInfo() {
-        return ApiResult.success();
+        LoginInfoDTO loginInfoDTO = getLoginInfoDTO();
+        return ApiResult.success(loginInfoDTO);
     }
 
 
     /**
      * 开发阶段的方法
+     *
      * @param pwd
      * @return
      */

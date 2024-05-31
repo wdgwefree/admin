@@ -1,5 +1,7 @@
 package com.wdg.system.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  *
  * @author: wdg
  */
+@Data
 public class LoginInfoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

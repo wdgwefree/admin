@@ -29,12 +29,6 @@ public class LoginTokenDTO implements Serializable, Comparable<LoginTokenDTO> {
      */
     private String creteDate;
 
-    /**
-     * 创建时间
-     */
-    private String updateDate;
-
-
     @Override
     public int compareTo(@NotNull LoginTokenDTO o) {
         return this.creteDate.compareTo(o.creteDate);

@@ -38,8 +38,8 @@ public class BaseController {
     /**
      * 获取用户缓存信息(开放接口无法使用！)
      */
-    public LoginInfoDTO getLoginInfo() {
-        LoginInfoDTO loginInfo = tokenUtil.getLoginInfo();
+    public LoginInfoDTO getLoginInfoDTO() {
+        LoginInfoDTO loginInfo = tokenUtil.getLoginInfoDTO();
         return loginInfo;
     }
 }
