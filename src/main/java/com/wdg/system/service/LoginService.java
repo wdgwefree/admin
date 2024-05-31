@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wdg.common.constant.ResultCode;
 import com.wdg.common.constant.StatusConstants;
 import com.wdg.common.exception.BusinessException;
-import com.wdg.system.dto.LoginDTO;
+import com.wdg.system.dto.LoginParams;
 import com.wdg.system.entity.SysUser;
 import com.wdg.system.util.RsaUtil;
 import com.wdg.system.util.TokenUtil;
@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
  * 登录服务类
  *
  * @author: wdg
- * @date: 2024/5/20
  **/
 @Service
 public class LoginService {
@@ -29,10 +28,17 @@ public class LoginService {
     @Autowired
     private TokenUtil tokenUtil;
 
-    public String login(LoginDTO loginDTO) {
 
-        String userAccount = loginDTO.getUserAccount();
-        String password = loginDTO.getPassword();
+    /**
+     * 登录
+     *
+     * @param loginParams
+     * @return token
+     */
+    public String login(LoginParams loginParams) {
+
+        String userAccount = loginParams.getUserAccount();
+        String password = loginParams.getPassword();
 
         //账号、状态、密码校验
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserAccount, userAccount).ne(SysUser::getStatus, StatusConstants.NOT_EXIST);
@@ -49,7 +55,7 @@ public class LoginService {
         try {
             pwd = DigestUtils.md5DigestAsHex((RsaUtil.decryptByPrivateKey(password) + sysUser.getSalt()).getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            pwd="";
+            pwd = "";
         }
         if (!pwd.equals(sysUser.getPassword())) {
             //记录密码错误次数

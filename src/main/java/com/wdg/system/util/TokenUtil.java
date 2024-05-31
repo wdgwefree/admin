@@ -9,8 +9,11 @@ import com.wdg.common.constant.ResultCode;
 import com.wdg.common.exception.BusinessException;
 import com.wdg.common.util.MyServletUtil;
 import com.wdg.common.util.RedisCache;
+import com.wdg.system.dto.LoginInfoDTO;
+import com.wdg.system.dto.LoginSessionDTO;
 import com.wdg.system.dto.LoginTokenDTO;
 import com.wdg.system.entity.SysUser;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +38,7 @@ public class TokenUtil {
     private RedisCache redisCache;
 
     @Autowired
-    private AsyncUtil asyncUtil;
+    private AsyncService asyncService;
 
     /**
      * 生成token
@@ -64,7 +67,7 @@ public class TokenUtil {
         redisCache.setCacheObject(RedisConstants.LOGIN_TOKEN + tokenKey, loginTokenDTO, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
 
         //异步处理会话和token （在不影响效率的前提下，避免同一账号多线程并发登录导致的竞态条件问题）
-        asyncUtil.asyncSession(sysUser, loginTokenDTO);
+        asyncService.asyncSession(sysUser, loginTokenDTO);
         return token;
     }
 
@@ -72,10 +75,26 @@ public class TokenUtil {
     /**
      * 校验token
      */
-    public Boolean checkToken(String token) {
+    public Boolean verifyToken(String token) {
         String tokenKey = JWTUtil.parseToken(token).getPayload("tokenKey").toString();
 
         return true;
+    }
+
+
+    /**
+     * 获取当前登录信息
+     *
+     * @return
+     */
+    public LoginInfoDTO getLoginInfo() {
+        String token = MyServletUtil.getRequest().getHeader(tokenProperties.getHeader());
+        String userId = JWTUtil.parseToken(token).getPayload("userId").toString();
+        LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
+
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
+        BeanUtils.copyProperties(loginSessionDTO, loginInfoDTO);
+        return loginInfoDTO;
     }
 
 

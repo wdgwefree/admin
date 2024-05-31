@@ -9,10 +9,9 @@ import java.io.Serializable;
  * 登录token的Dto
  *
  * @author: wdg
- * @date: 2024/05/21
  */
 @Data
-public class LoginTokenDTO implements Serializable,Comparable<LoginTokenDTO> {
+public class LoginTokenDTO implements Serializable, Comparable<LoginTokenDTO> {
     private static final long serialVersionUID = 1L;
 
     /**

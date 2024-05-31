@@ -3,7 +3,10 @@ package com.wdg.system.controller;
 import com.github.pagehelper.PageInfo;
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.util.PageUtil;
+import com.wdg.system.dto.LoginInfoDTO;
+import com.wdg.system.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -12,6 +15,10 @@ import java.util.List;
  */
 @Slf4j
 public class BaseController {
+
+    @Autowired
+    private TokenUtil tokenUtil;
+
     /**
      * 设置请求分页数据
      */
@@ -26,5 +33,13 @@ public class BaseController {
     protected PageData getPageData(List<?> list) {
         long total = new PageInfo(list).getTotal();
         return new PageData(list, total);
+    }
+
+    /**
+     * 获取用户缓存信息(开放接口无法使用！)
+     */
+    public LoginInfoDTO getLoginInfo() {
+        LoginInfoDTO loginInfo = tokenUtil.getLoginInfo();
+        return loginInfo;
     }
 }

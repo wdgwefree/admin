@@ -1,17 +1,14 @@
 package com.wdg.system.dto;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 登录会话DTO
+ * 登录的用户信息
  *
  * @author: wdg
  */
-@Data
-public class LoginSessionDTO implements Serializable {
+public class LoginInfoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -68,11 +65,4 @@ public class LoginSessionDTO implements Serializable {
      * 用户角色集合
      */
     private List<String> roles;
-
-    /**
-     * 登录token集合
-     */
-    private List<LoginTokenDTO> loginTokenDTOS;
-
-
 }

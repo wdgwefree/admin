@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @date: 2024/5/30
  **/
 @Component
-public class AsyncUtil {
+public class AsyncService {
 
     @Autowired
     private ISysMenuService iSysMenuService;

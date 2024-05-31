@@ -1,6 +1,9 @@
 package com.wdg.common.Interceptor;
 
 import com.wdg.common.annotation.OpenAPI;
+import com.wdg.common.config.TokenProperties;
+import com.wdg.system.util.TokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,6 +17,12 @@ import java.lang.reflect.Method;
  */
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private TokenProperties tokenProperties;
+
+    @Autowired
+    private TokenUtil tokenUtil;
 
     /**
      * 每次请求之前触发的方法
@@ -33,18 +42,14 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (openAPI != null) {
             return true;
         }
+        String token = request.getHeader(tokenProperties.getHeader());//获取请求头中的令牌
 
-
-        return false;
-
-        //String token = request.getHeader(header);//获取请求头中的令牌
-        //
-        ////注销逻辑
-        //if (request.getServletPath().contains("/system/logout")) {
-        //    tokenService.delToken(response,token);
-        //    return false;
-        //}
-        //return tokenService.verifyToken(response, token);
+        //注销逻辑
+        if (request.getServletPath().contains("/logout")) {
+            return false;
+        }
+        return true;
+        //return tokenUtil.verifyToken(response, token);
     }
 
 
