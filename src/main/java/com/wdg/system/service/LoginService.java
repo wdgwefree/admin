@@ -66,4 +66,8 @@ public class LoginService {
         String token = tokenUtil.generateToken(sysUser);
         return token;
     }
+
+    public void logout() {
+        tokenUtil.deleteToken();
+    }
 }

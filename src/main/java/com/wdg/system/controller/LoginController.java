@@ -32,6 +32,7 @@ public class LoginController extends BaseController {
 
     @GetMapping("/logout")
     public ApiResult logout() {
+        loginService.logout();
         return ApiResult.success("注销成功");
     }
 

@@ -73,6 +73,12 @@ public class TokenUtil {
     }
 
 
+    public void deleteToken() {
+        String token = MyServletUtil.getRequest().getHeader(tokenProperties.getHeader());
+        String tokenKey = RedisConstants.LOGIN_TOKEN + JWTUtil.parseToken(token).getPayload("tokenKey").toString();
+        redisCache.deleteObject(tokenKey);
+    }
+
     /**
      * 校验token
      */
