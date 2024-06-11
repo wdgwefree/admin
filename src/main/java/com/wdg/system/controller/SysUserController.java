@@ -1,5 +1,6 @@
 package com.wdg.system.controller;
 
+import com.wdg.common.annotation.CheckPermission;
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.util.ValidatedGroup;
@@ -57,5 +58,11 @@ public class SysUserController extends BaseController {
         List<SysUser> list = iSysUserService.list();
         PageData pageData = getPageData(list);
         return ApiResult.success(pageData);
+    }
+
+    @GetMapping("/test")
+    @CheckPermission("sysUser:test")
+    public ApiResult test() {
+        return ApiResult.success();
     }
 }

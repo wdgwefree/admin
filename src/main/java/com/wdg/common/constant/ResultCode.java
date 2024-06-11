@@ -47,6 +47,14 @@ public enum ResultCode {
 
 
     /**
+     * 权限相关（二级宏观错误码）
+     */
+    PERMISSION_ERROR("B0100", "权限异常"),
+    PERMISSION_NOT_FOUND("B0101", "权限不存在"),
+    PERMISSION_NOT_ENOUGH("B0102", "权限不足"),
+
+
+    /**
      * 系统执行出错（一级宏观错误码）
      */
     SYSTEM_ERROR("B0001", "系统异常"),

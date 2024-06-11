@@ -7,7 +7,6 @@ import com.wdg.system.dto.LoginInfoDTO;
 import com.wdg.system.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StopWatch;
 
 import java.util.List;
 
@@ -40,11 +39,7 @@ public class BaseController {
      * 获取用户缓存信息(开放接口无法使用！)
      */
     public LoginInfoDTO getLoginInfoDTO() {
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         LoginInfoDTO loginInfo = tokenUtil.getLoginInfoDTO();
-        stopWatch.stop();
-        System.out.println("获取用户缓存信息耗时：" + stopWatch.getTotalTimeMillis() + "毫秒");
         return loginInfo;
     }
 }
