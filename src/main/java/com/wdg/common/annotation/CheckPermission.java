@@ -7,10 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description: 权限校验注解
- * 可标注在方法、类上（效果等同于标注在此类的所有方法上）
+ * 权限校验注解:必须具有指定权限标识才能进入该方法。
+ * 只能标注在方法上
+ *
+ * @author wdg
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckPermission {
 

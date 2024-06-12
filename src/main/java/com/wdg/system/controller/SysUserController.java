@@ -1,6 +1,6 @@
 package com.wdg.system.controller;
 
-import com.wdg.common.annotation.CheckPermission;
+import com.wdg.common.annotation.CheckRole;
 import com.wdg.common.dto.page.PageData;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.common.util.ValidatedGroup;
@@ -33,6 +33,7 @@ public class SysUserController extends BaseController {
 
     /**
      * 删除用户
+     *
      * @param userId
      * @return
      */
@@ -61,7 +62,7 @@ public class SysUserController extends BaseController {
     }
 
     @GetMapping("/test")
-    @CheckPermission("sysUser:test")
+    @CheckRole("common")
     public ApiResult test() {
         return ApiResult.success();
     }

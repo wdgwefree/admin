@@ -4,6 +4,9 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
+import com.wdg.common.annotation.CheckMode;
+import com.wdg.common.annotation.CheckPermission;
+import com.wdg.common.annotation.CheckRole;
 import com.wdg.common.config.TokenProperties;
 import com.wdg.common.constant.RedisConstants;
 import com.wdg.common.constant.ResultCode;
@@ -19,16 +22,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description: token工具类
+ * token工具类
+ *
  * @author: wdg
- * @date: 2024/5/17
  **/
 @Component
 public class TokenUtil {
@@ -82,7 +84,7 @@ public class TokenUtil {
     /**
      * 校验token
      */
-    public Boolean verifyToken(String token) {
+    public Boolean verifyToken(String token, Method method) {
         //token空值校验
         if (StringUtils.isBlank(token)) {
             throw new BusinessException(ResultCode.TOKEN_NOT_FOUND);
@@ -113,6 +115,9 @@ public class TokenUtil {
             redisCache.expire(tokenKey, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
             redisCache.expire(RedisConstants.LOGIN_SESSION + userId, tokenProperties.getExpireTime(), TimeUnit.MINUTES);
         }
+
+        //判断要请求的接口是否有权限
+        this.checkPermissionOrRole(userId, method);
         return true;
     }
 
@@ -160,5 +165,69 @@ public class TokenUtil {
             throw new BusinessException(ResultCode.USER_PASSWORD_ERROR_OVER_MAX_LIMIT);
         }
 
+    }
+
+
+    /**
+     * 检测用户角色和权限
+     */
+    private void checkPermissionOrRole(String userId, Method method) {
+
+        //没有权限或者角色注解，直接放行
+        CheckPermission checkPermission = method.getAnnotation(CheckPermission.class);
+        CheckRole checkRole = method.getAnnotation(CheckRole.class);
+        if (checkPermission == null && checkRole == null) {
+            return;
+        }
+
+        LoginSessionDTO loginSessionDTO = redisCache.getCacheObject(RedisConstants.LOGIN_SESSION + userId);
+        List<String> permissions = loginSessionDTO.getPermissions();
+        List<String> roles = loginSessionDTO.getRoles();
+
+        //具有超级管理员角色，直接放行
+        if (roles.contains("admin")) {
+            return;
+        }
+
+        //角色和权限注解都出现 是and的关系
+        if (checkPermission != null && checkRole != null) {
+            if (checkRole.mode() == CheckMode.AND) {
+                if (roles.containsAll(Arrays.asList(checkRole.value())) && permissions.containsAll(Arrays.asList(checkPermission.value()))) {
+                    return;
+                }
+            } else {
+                if (Arrays.stream(checkRole.value()).anyMatch(roles::contains) && Arrays.stream(checkPermission.value()).anyMatch(permissions::contains)) {
+                    return;
+                }
+            }
+        }
+
+        //权限校验
+        if (checkPermission != null) {
+            if (checkPermission.mode() == CheckMode.AND) {
+                if (permissions.containsAll(Arrays.asList(checkPermission.value()))) {
+                    return;
+                }
+            } else {
+                if (Arrays.stream(checkPermission.value()).anyMatch(permissions::contains)) {
+                    return;
+                }
+            }
+        }
+
+        //角色校验
+        if (checkRole != null) {
+            if (checkRole.mode() == CheckMode.AND) {
+                if (roles.containsAll(Arrays.asList(checkRole.value()))) {
+                    return;
+                }
+            } else {
+                if (Arrays.stream(checkRole.value()).anyMatch(roles::contains)) {
+                    return;
+                }
+            }
+        }
+
+        throw new BusinessException(ResultCode.PERMISSION_NOT_ENOUGH);
     }
 }

@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * @Description 自定义拦截器
+ * 自定义拦截器
+ *
+ * @author wdg
  */
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
@@ -45,7 +47,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         String token = request.getHeader(tokenProperties.getHeader());//获取请求头中的令牌
 
         //校验token
-        tokenUtil.verifyToken(token);
+        tokenUtil.verifyToken(token, method);
         return true;
     }
 

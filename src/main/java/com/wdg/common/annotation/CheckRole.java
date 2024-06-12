@@ -6,8 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description 角色认证校验：必须具有指定角色标识才能进入该方法。
- * 可标注在方法、类上（效果等同于标注在此类的所有方法上）
+ * 角色认证校验：必须具有指定角色标识才能进入该方法。
+ * 只能标注在方法上
+ *
+ * @author wdg
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

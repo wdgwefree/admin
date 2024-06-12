@@ -2,6 +2,8 @@ package com.wdg.common.annotation;
 
 /**
  * 注解鉴权的验证模式
+ *
+ * @author wdg
  */
 public enum CheckMode {
     /**

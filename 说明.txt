@@ -58,6 +58,8 @@ token相关
 @CheckPermission("user.add")        //校验当前账号是否有"user.add"权限
 @CheckRole("admin")     //校验当前账号是否有"admin"角色
 
+权限校验是通过拦截器实现的
+
 
 
 
