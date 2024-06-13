@@ -47,7 +47,7 @@ public class LoginController extends BaseController {
 
 
     /**
-     * 开发阶段的方法
+     * 获取密码密文（开发阶段的方法）
      *
      * @param pwd
      * @return

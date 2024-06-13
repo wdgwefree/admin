@@ -40,7 +40,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void add(SysUserDTO sysUserDTO) {
         boolean exist = this.checkUserAccountExist(sysUserDTO.getUserAccount());
         if (exist) {
-            throw new BusinessException(ResultCode.USER_ACCOUNT_NOT_FOUND,sysUserDTO.getUserAccount());
+            throw new BusinessException(ResultCode.USER_ACCOUNT_AlREADY_EXIST, sysUserDTO.getUserAccount());
         }
         SysUser sysUser = new SysUser();
         BeanUtil.copyProperties(sysUserDTO, sysUser);
@@ -55,11 +55,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         //目前新增用户时密码采用明文传输
         String salt = SaltUtil.getSalt();
-        String password = DigestUtils.md5DigestAsHex((sysUserDTO.getPassword()+salt).getBytes(StandardCharsets.UTF_8));
+        String password = DigestUtils.md5DigestAsHex((sysUserDTO.getPassword() + salt).getBytes(StandardCharsets.UTF_8));
         sysUser.setSalt(salt);
         sysUser.setPassword(password);
         save(sysUser);
-        log.info("新增用户:"+sysUser.getUserAccount());
+        log.info("新增用户:" + sysUser.getUserAccount());
     }
 
     @Override

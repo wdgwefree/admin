@@ -58,7 +58,7 @@ public class SysUserDTO implements Serializable {
     private String sex;
 
     /**
-     * 头像路径
+     * 头像文件
      */
     private MultipartFile avatarFile;
 

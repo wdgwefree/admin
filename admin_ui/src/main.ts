@@ -1,8 +1,6 @@
 import '@/assets/scss/index.scss'
 import 'element-plus/dist/index.css'
 import 'nprogress/nprogress.css';
-import 'element-plus/dist/index.css'
-import 'nprogress/nprogress.css';
 
 
 import App from './App.vue'

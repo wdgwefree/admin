@@ -19,6 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * 处理运行时异常
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public ApiResult handleException(RuntimeException e) {
+        e.printStackTrace();
+        return ApiResult.exception(e.getMessage());
+    }
+
 
     /**
      * 处理业务异常

@@ -26,6 +26,7 @@ public class SysUserController extends BaseController {
      * 新增用户
      */
     @PostMapping("/add")
+    @CheckRole("admin")
     public ApiResult add(@RequestBody @Validated({ValidatedGroup.Insert.class}) SysUserDTO sysUserDTO) {
         iSysUserService.add(sysUserDTO);
         return ApiResult.success();
@@ -38,6 +39,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/deleteById")
+    @CheckRole("admin")
     public ApiResult deleteById(@RequestParam("userId") Long userId) {
         iSysUserService.deleteById(userId);
         return ApiResult.success();

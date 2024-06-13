@@ -4,11 +4,11 @@ import request from '@/utils/request'
 export function login_P(data) {
   return request({
     url: '/system/login',
-    headers: {
-      isToken: false
-    },
     method: 'post',
-    data: data
+    data: data,
+    headers: {
+      'openApi': true,
+    }
   })
 }
 
