@@ -13,9 +13,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://81.70.190.102:50307/admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3306/admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
     username: root
-    password: TXroot123.
+    password: root
 
     # 连接池配置
     druid:
@@ -55,10 +55,10 @@ spring:
 
   #redis配置
   redis:
-    database: 6 # 数据库索引 默认为0
-    host: 81.70.190.102    # redis服务器地址
+    database: 0 # 数据库索引 默认为0
+    host: localhost   # redis服务器地址
     port: 6973    # 端口号
-    password: redis1234    # 密码（默认为空）
+    password: redis    # 密码（默认为空）
     timeout: 3000 # 连接超时时间（毫秒）
     lettuce:
       pool: # 连接池配置
@@ -69,11 +69,10 @@ spring:
 
 #minio配置
 minio:
-  endpoint: http://81.70.190.102:9002
+  endpoint: http://localhost:9002
   accessKey: minio
-  secretKey: minio1234
-  bucketName: wdg-admin
-
+  secretKey: minio
+  bucketName: minio
 
 mybatis-plus:
   # 指定包别名

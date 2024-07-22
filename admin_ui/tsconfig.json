@@ -24,7 +24,8 @@
     },
     "plugins": [],
     // 指定要包含的类型声明文件
-    "types": ["@types/node","vue-router"]
+    "types": ["@types/node","vue-router","element-plus"],
+    "typeRoots": ["./node_modules/@types"]
   },
   //  include: 指定要包含在编译中的文件
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

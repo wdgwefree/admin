@@ -30,9 +30,9 @@ public class GenerateDocument {
         //数据源
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/comp_sign");
+        hikariConfig.setJdbcUrl("jdbc:mysql://192.168.0.200:3306/dcsm_wf_test");
         hikariConfig.setUsername("root");
-        hikariConfig.setPassword("mysql1234");
+        hikariConfig.setPassword("root");
 
         //设置可以获取tables remarks信息
         hikariConfig.addDataSourceProperty("useInformationSchema", "true");
