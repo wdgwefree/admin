@@ -17,18 +17,18 @@ import java.util.List;
 public class ControllerConfig implements WebMvcConfigurer {
 
     @Autowired
-    private TokenInterceptor tokenInterceptor;
+    private GlobalInterceptor globalInterceptor;
 
     /**
      * 添加拦截规则
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //不需要拦截的接口在此处添加,或者在接口方法上用标注
+        //不需要拦截的接口在此处添加,或者在接口方法上用注解@OpenApi标注
         List<String> patterns = new ArrayList<>();
         patterns.add("/druid/**");
         patterns.add("/error");
-        registry.addInterceptor(tokenInterceptor)
+        registry.addInterceptor(globalInterceptor)
                 .addPathPatterns("/**") //所有的请求都要拦截。
                 .excludePathPatterns(patterns); //将不需要拦截的接口请求排除在外
 

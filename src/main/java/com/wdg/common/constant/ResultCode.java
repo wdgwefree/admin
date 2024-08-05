@@ -45,6 +45,14 @@ public enum ResultCode {
     USER_PASSWORD_ERROR("A0210", "用户密码错误"),
     USER_PASSWORD_ERROR_OVER_MAX_LIMIT("A0211", "密码错误频繁，该账号已被锁定，请稍后再试"),
 
+    REPEAT_SUBMIT("A0220", "请勿重复提交"),
+
+
+    /**
+     * 业务相关（二级宏观错误码）
+     */
+    BUSINESS_ERROR("B0100", "业务异常"),
+
 
     /**
      * 权限相关（二级宏观错误码）

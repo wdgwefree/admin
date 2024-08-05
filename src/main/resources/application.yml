@@ -17,6 +17,9 @@ spring:
       max-request-size: 500MB
   resources:
     static-locations: classpath:/static/
+  # 关闭spring 启动动画
+  main:
+    banner-mode: off
 
 # token配置
 token:

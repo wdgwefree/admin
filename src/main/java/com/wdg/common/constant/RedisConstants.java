@@ -31,4 +31,9 @@ public class RedisConstants {
      */
     public static final String LOGIN_LOCK = "login:lock:";
 
+    /**
+     * 重复提交
+     */
+    public static final String REPEAT_SUBMIT = "repeat:submit:";
+
 }

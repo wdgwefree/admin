@@ -1,6 +1,7 @@
 package com.wdg.system.controller;
 
 import com.wdg.common.annotation.OpenAPI;
+import com.wdg.common.annotation.RepeatSubmit;
 import com.wdg.common.dto.result.ApiResult;
 import com.wdg.system.dto.LoginInfoDTO;
 import com.wdg.system.dto.LoginParams;
@@ -40,6 +41,7 @@ public class LoginController extends BaseController {
      * 获取当前登录的用户信息
      */
     @GetMapping("/getLoginInfo")
+    @RepeatSubmit
     public ApiResult getLoginInfo() {
         LoginInfoDTO loginInfoDTO = getLoginInfoDTO();
         return ApiResult.success(loginInfoDTO);
