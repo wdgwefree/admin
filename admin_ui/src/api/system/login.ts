@@ -1,13 +1,13 @@
-import request from '@/utils/request'
+import request from '@/utils/http/request'
 
 // 登录方法
-export function login_P(data) {
+export function login_P(data: any) {
   return request({
-    url: '/system/login',
+    url: '/login',
     method: 'post',
     data: data,
     headers: {
-      'openApi': true,
+      'needToken': false,
     }
   })
 }
