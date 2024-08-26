@@ -1,6 +1,7 @@
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
+// 进度条
 NProgress.configure({
   // 动画方式
   easing: "ease",
@@ -11,7 +12,7 @@ NProgress.configure({
   // 自动递增间隔
   trickleSpeed: 200,
   // 初始化时的最小百分比
-  minimum: 0.3
+  minimum: 0.3,
 });
 
 export default NProgress;

@@ -3,6 +3,20 @@ import vue from '@vitejs/plugin-vue'
 // 导入path 用于设置别名
 import * as path from "path";
 
+import {
+  name,
+  version,
+  engines,
+  dependencies,
+  devDependencies,
+} from "./package.json";
+
+/** 平台的名称、版本、运行所需的`node`版本、依赖、构建时间的类型提示 */
+const __APP_INFO__ = {
+  pkg: { name, version, engines, dependencies, devDependencies },
+  buildTimestamp: Date.now(),
+};
+
 export default defineConfig({
   
   plugins: [
@@ -67,5 +81,6 @@ export default defineConfig({
   define: {
     // 添加生产环境下的特性标志() 识别和删除不被使用的代码，以减小最终生成的 JavaScript 文件的大小。
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+    __APP_INFO__: JSON.stringify(__APP_INFO__),
   },
 })

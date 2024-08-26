@@ -13,7 +13,7 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
   // URL请求公共部分
-  baseURL: '/admin',
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   // 超时
   timeout: 60000,
   headers: {
@@ -32,12 +32,10 @@ const request: AxiosInstance = axios.create(defaultConfig)
 
 // 请求拦截器
 request.interceptors.request.use(config => {
-  console.log("config", config)
-  const url: string = config.url;
+  console.log("请求url", config.url)
   //需要token
   const needToken: boolean = config.headers.needToken === false ? false : true;
   console.log("needToken", needToken)
-
   if (needToken) {
     config.headers['Authorization'] = getToken()
   }
@@ -51,7 +49,6 @@ request.interceptors.request.use(config => {
 // 响应拦截器
 request.interceptors.response.use((res) => {
 
-  console.log("res", res)
   // 二进制数据则直接返回
   if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
     return res.data

@@ -1,55 +1,36 @@
 import axios from "axios";
 import type {App} from "vue";
 
-let config: object = {};
-const {VITE_PUBLIC_PATH} = import.meta.env;
+let config: Record<string, any> = {};
 
-const setConfig = (cfg?: unknown) => {
-  config = Object.assign(config, cfg);
+// 设置全局配置
+const setConfig = (cfg?: Record<string, any>) => {
+  config = {...config, ...cfg};
 };
 
-const getConfig = (key?: string): PlatformConfigs => {
-  if (typeof key === "string") {
-    const arr = key.split(".");
-    if (arr && arr.length) {
-      let data = config;
-      arr.forEach(v => {
-        if (data && typeof data[v] !== "undefined") {
-          data = data[v];
-        } else {
-          data = null;
-        }
-      });
-      return data;
-    }
+// 获取全局配置
+const getConfig = (key?: string): any => {
+  if (key) {
+    return key.split(".").reduce((acc, curr) => acc && acc[curr], config);
   }
   return config;
 };
 
 /** 获取项目动态全局配置 */
-export const getPlatformConfig = async (app: App): Promise<undefined> => {
-  app.config.globalProperties.$config = {};
-  return axios({
-    method: "get",
-    url: `${VITE_PUBLIC_PATH}platform-config.json`
-  }).then(({data: config}) => {
-    console.log("获取项目动态全局配置", config);
-    let $config = app.config.globalProperties.$config;
-    // 自动注入系统配置
-    if (app && $config && typeof config === "object") {
-      $config = Object.assign($config, config);
-      app.config.globalProperties.$config = $config;
-      // 设置全局配置
-      setConfig($config);
-    }
+export const getPlatformConfig = async (app: App): Promise<Record<string, any> | undefined> => {
+  try {
+    const {data} = await axios.get("./../../public/platform-config.json");
+    console.log("获取项目动态全局配置", data);
+
+    const $config = {...(app.config.globalProperties.$config || {}), ...data};
+    app.config.globalProperties.$config = $config;
+
+    setConfig($config);
     return $config;
-  })
-    .catch(() => {
-      throw "请在public文件夹下添加platform-config.json配置文件";
-    });
+  } catch (error) {
+    console.error("无法获取平台配置，请在 public 文件夹下添加 platform-config.json 配置文件", error);
+    throw error;
+  }
 };
 
-/** 本地响应式存储的命名空间 */
-const responsiveStorageNameSpace = () => getConfig().ResponsiveStorageNameSpace;
-
-export {getConfig, setConfig, responsiveStorageNameSpace};
+export {getConfig, setConfig};

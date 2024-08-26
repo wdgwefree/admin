@@ -1,7 +1,7 @@
 import '@/assets/scss/index.scss'
 import 'element-plus/dist/index.css'
 import 'nprogress/nprogress.css';
-import { getPlatformConfig } from "@/config";
+
 
 import App from './App.vue'
 import router from './router'
@@ -16,11 +16,4 @@ app.use(router)
 app.use(pinia)
 app.mount('#app')
 
-getPlatformConfig(app).then(async config => {
-  // await router.isReady();
-  // injectResponsiveStorage(app, config);
-  // app.use(MotionPlugin).use(useElementPlus).use(Table);
-  // // .use(PureDescriptions)
-  // // .use(useEcharts);
-  // app.mount("#app");
-});
+

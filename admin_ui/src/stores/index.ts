@@ -30,3 +30,5 @@ pinia.use(({store}) => {
   decryptAndRestoreState()
 });
 export default pinia;
+
+export * from "./modules/app";

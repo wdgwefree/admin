@@ -1,23 +1,31 @@
 # admin_ui
 
+## 项目启动
 
-This template should help get you started developing with Vue 3 in Vite.
+```bash
+# 克隆代码
+git clone https://gitee.com/youlaiorg/vue3-element-admin.git
 
-## Project Setup
+# 切换目录
+cd vue3-element-admin
 
-```sh
-npm install
+# 安装 pnpm
+npm install pnpm -g
+
+# 设置镜像源(可忽略)
+pnpm config set registry https://registry.npmmirror.com
+
+# 安装依赖
+pnpm install
+
+# 启动运行
+pnpm run dev
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
 
 
-### Type-Check, Compile and Minify for Production
+## 项目部署
 
-```sh
-npm run build
-```
+```bash
+# 项目打包
+pnpm run build
