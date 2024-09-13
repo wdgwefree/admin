@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 自动填充 拦截器
+ * 实体类字段使用注解 @TableField(fill = FieldFill.INSERT)
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
